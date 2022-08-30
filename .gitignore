@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+/.vs/SecurityCenterQt/FileContentIndex
+/.vs/SecurityCenterQt/v17/ipch
+/.vs/SecurityCenterQt/v17
+/SecurityCenterQt/x64/Debug
