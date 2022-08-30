@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "camerafeed.h"
 
-CameraFeed::CameraFeed(QObject* parent) : QThread{ parent }, VideoCapture{ HARDCODED_CAMERAID }
-{
+CameraFeed::CameraFeed(int cameraId, QObject* parent) : QThread{ parent }, VideoCapture{ cameraId }
+{}
 
-}
+CameraFeed::CameraFeed(std::string connectionString, QObject* parent) : QThread{ parent }, VideoCapture{ connectionString }
+{}
 
 void CameraFeed::run()
 {

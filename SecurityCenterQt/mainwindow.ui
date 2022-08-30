@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1106</width>
-    <height>806</height>
+    <width>1404</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -45,8 +45,8 @@
    <widget class="QPushButton" name="StartCameras_button">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>30</y>
+      <x>670</x>
+      <y>0</y>
       <width>75</width>
       <height>24</height>
      </rect>
@@ -55,13 +55,57 @@
      <string>Start</string>
     </property>
    </widget>
+   <widget class="QLabel" name="cam2">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>30</y>
+      <width>640</width>
+      <height>480</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>640</width>
+      <height>480</height>
+     </size>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="cam3">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>530</y>
+      <width>640</width>
+      <height>480</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>640</width>
+      <height>480</height>
+     </size>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1106</width>
+     <width>1404</width>
      <height>22</height>
     </rect>
    </property>
