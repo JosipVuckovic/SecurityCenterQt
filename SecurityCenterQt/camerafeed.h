@@ -23,6 +23,11 @@ public:
 		return Pixmap;
 	}
 
+	QImage qImageFromOpenCVMat()
+	{
+		return QImage((unsigned char*)Frame.data, Frame.cols, Frame.rows, QImage::Format_RGB888).rgbSwapped(); //Converts OpenCV BGR to RGB
+	}	
+
 signals:
 	void newPixmapCaptured();
 
@@ -30,6 +35,7 @@ protected:
 	void run() override;
 
 private:
+	QTimer* timer;
 	int CameraId;
 	std::string CameraConnectionString;
 	QPixmap Pixmap;

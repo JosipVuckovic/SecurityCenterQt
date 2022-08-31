@@ -17,10 +17,10 @@ void CameraFeed::run()
 			if (!Frame.empty())
 			{
 				//TODO: Maybe move to helper inline function
-				Pixmap = QPixmap::fromImage(QImage((unsigned char*)Frame.data, Frame.cols, Frame.rows, QImage::Format_RGB888).rgbSwapped()); //Converts OpenCV BGR to RGB
+				Pixmap = QPixmap::fromImage(qImageFromOpenCVMat());
 				emit newPixmapCaptured();
 			}
 
 		}
-	}
+	}	
 }
