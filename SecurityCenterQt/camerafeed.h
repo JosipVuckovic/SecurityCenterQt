@@ -31,15 +31,16 @@ public:
 	{
 		return ResizedRecordingFrame;
 	}
-	void setRecordingStatus(bool rec)
+	void inline setRecordingStatus(bool rec)
 	{	
 		recording = rec;		
 	}
-	void releaseRecording()
+	void releaseRecording(bool rec)
 	{
+		setRecordingStatus(rec);
 		oVideoWriter.release();		
 	}
-	void initRecording();
+	void initRecording(bool rec);
 
 	
 

@@ -15,12 +15,9 @@ MainWindow::MainWindow(QWidget* parent)	: QMainWindow(parent)
 	//VideoCapture_Cam3 = new CameraFeed(HARDCODED_IP_CAMERA2, this);
 
 
-	//TODO: Read W/H from settings
-	//TODO: Have 4 cams or 2 Y/N
+	//TODO: Read W/H from settings	
 	//TODO: PROP:  On double click on one, have it in full screen? Y/N
-	//TODO: PROP:  Have take screenshot of cam feed Y/N
-	//TODO: PROP:  save cam feed to file Y/N
-	
+		
 	connect(VideoCapture_Cam1, &CameraFeed::newPixmapCaptured, this, [&]() {
 		ui.cam1->setPixmap(VideoCapture_Cam1->pixmap().scaled(640, 480));
 		});	
@@ -63,19 +60,14 @@ void MainWindow::on_cam1_take_shot_button_clicked()
 
 void MainWindow::on_cam1_record_button_clicked()
 {	
-	// TODO: Merge functions
-	
 	if (!recording)
 	{
 		recording = true;
-		VideoCapture_Cam1->initRecording();
-		VideoCapture_Cam1->setRecordingStatus(recording);		
+		VideoCapture_Cam1->initRecording(recording);			
 	}
 	else
 	{
-		recording = false;
-		VideoCapture_Cam1->setRecordingStatus(recording);
-		VideoCapture_Cam1->releaseRecording();
-	}
-	
+		recording = false;		
+		VideoCapture_Cam1->releaseRecording(recording);
+	}	
 }

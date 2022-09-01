@@ -33,8 +33,10 @@ void CameraFeed::run()
 	}	
 }
 
-void CameraFeed::initRecording()
+void CameraFeed::initRecording(bool rec)
 {
+	setRecordingStatus(rec);
+
 	std::string outputString = QDir::currentPath().toStdString() + "/cam1_video_" + QTime::currentTime().toString("hh_mm_ss").toStdString() + ".avi";
 	double dWidth = 640; //get the width of frames of the video
 	double dHeight = 480; //get the height of frames of the video
