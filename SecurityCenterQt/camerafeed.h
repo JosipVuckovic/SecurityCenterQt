@@ -26,21 +26,42 @@ public:
 	QImage qImageFromOpenCVMat()
 	{
 		return QImage((unsigned char*)Frame.data, Frame.cols, Frame.rows, QImage::Format_RGB888).rgbSwapped(); //Converts OpenCV BGR to RGB
-	}	
+	}
+	cv::Mat frame()
+	{
+		return ResizedRecordingFrame;
+	}
+	void setRecordingStatus(bool rec)
+	{	
+		recording = rec;		
+	}
+	void releaseRecording()
+	{
+		oVideoWriter.release();		
+	}
+	void initRecording();
+
+	
 
 signals:
-	void newPixmapCaptured();
+	void newPixmapCaptured();		
 
 protected:
-	void run() override;
+	void run() override;	
 
-private:
-	QTimer* timer;
+private:	
 	int CameraId;
 	std::string CameraConnectionString;
 	QPixmap Pixmap;
 	cv::Mat Frame;
-	cv::VideoCapture VideoCapture;
-
+	cv::VideoCapture VideoCapture;	
+	cv::Mat ResizedRecordingFrame;
+	bool recording = false;
+	cv::VideoWriter oVideoWriter;	
 };
+
+
+
+
+
 
