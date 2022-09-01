@@ -21,8 +21,7 @@ private slots:
 	void on_cam1_record_button_clicked();
 
 private:
-	Ui::MainWindowClass ui;
-	//QTimer* MainWindowTimer;
+	Ui::MainWindowClass ui;	
 	CameraFeed* VideoCapture_Cam1;
 	//CameraFeed* VideoCapture_Cam2;
 	//CameraFeed* VideoCapture_Cam3;

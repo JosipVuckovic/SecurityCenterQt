@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget* parent)	: QMainWindow(parent)
 	ui.setupUi(this);
 
 	//TODO: Implement Settings
+	// TODO: Use QSettings to load/save data to local registry
 	//TODO: Read camera connection data from settings
 	//TODO: PROP: Just create more video captures or use some sort of worer??
 			
@@ -47,15 +48,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_cam1_take_shot_button_clicked()
 {
-	QImage tmp = VideoCapture_Cam1->qImageFromOpenCVMat();	
-	QString outputString = QDir::currentPath() +"/cam1_"+QTime::currentTime().toString("hh_mm_ss")+".jpg";
-	
-	QImageWriter writer(outputString);
-	if (writer.write(tmp))
+	/*QImage tmp = VideoCapture_Cam1->qImageFromOpenCVMat();
+	QString outputString = QDir::currentPath() + "/cam1_" + QTime::currentTime().toString("hh_mm_ss") + ".jpg";
+
+	QImageWriter writer(outputString);*/
+	//if (writer.write(tmp))
+	//{
+	//	//TODO: Some dialog notify success and fail in else
+	//	//TODO: Move to helper class
+	//}	
+
+	if (VideoCapture_Cam1->saveCameraScreenshot())
 	{
-		//TODO: Some dialog notify success and fail in else
-		//TODO: Move to helper class
-	}	
+		//TODO: Some dialog notify success and fail in else	
+	}
 }
 
 void MainWindow::on_cam1_record_button_clicked()

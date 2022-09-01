@@ -23,26 +23,20 @@ public:
 		return Pixmap;
 	}
 
-	QImage qImageFromOpenCVMat()
+	QImage inline qImageFromOpenCVMat()
 	{
 		return QImage((unsigned char*)Frame.data, Frame.cols, Frame.rows, QImage::Format_RGB888).rgbSwapped(); //Converts OpenCV BGR to RGB
 	}
-	cv::Mat frame()
-	{
-		return ResizedRecordingFrame;
-	}
+	
 	void inline setRecordingStatus(bool rec)
 	{	
 		recording = rec;		
 	}
-	void releaseRecording(bool rec)
-	{
-		setRecordingStatus(rec);
-		oVideoWriter.release();		
-	}
+	
+	void releaseRecording(bool rec);	
 	void initRecording(bool rec);
 
-	
+	bool saveCameraScreenshot();	
 
 signals:
 	void newPixmapCaptured();		

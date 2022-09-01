@@ -45,5 +45,19 @@ void CameraFeed::initRecording(bool rec)
 	oVideoWriter = cv::VideoWriter(outputString, codec, 10, fSize, true);
 }
 
+void CameraFeed::releaseRecording(bool rec)
+{
+	setRecordingStatus(rec);
+	oVideoWriter.release();
+}
+
+bool CameraFeed::saveCameraScreenshot()
+{
+	//TODO: Need cameraName in settings
+	QImage tmp = this->qImageFromOpenCVMat();
+	QString outputString = QDir::currentPath() + "/cam1_" + QTime::currentTime().toString("hh_mm_ss") + ".jpg";
+	QImageWriter writer(outputString);
+	return writer.write(tmp);
+}
 
 
