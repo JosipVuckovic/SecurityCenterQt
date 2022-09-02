@@ -2,10 +2,8 @@
 #include "camerafeed.h"
 #include <opencv2/opencv.hpp>
 
-
-CameraFeed::CameraFeed(int cameraId, QObject* parent) : QThread{ parent }, VideoCapture{ cameraId }{}
-
-CameraFeed::CameraFeed(std::string connectionString, QObject* parent) : QThread{ parent }, VideoCapture{ connectionString }{}
+CameraFeed::CameraFeed(DirectlyConnectedCamera& cam, QObject* parent) : QThread{ parent }, VideoCapture{ cam.getConnectionValue() }, Camera{cam}{}
+CameraFeed::CameraFeed(IPCamera& cam, QObject* parent) : QThread{ parent }, VideoCapture{ cam.getConnectionValue() }, Camera{ cam }{}
 
 void CameraFeed::run()
 {		
@@ -16,10 +14,9 @@ void CameraFeed::run()
 			VideoCapture >> Frame;
 
 			if (recording)
-			{				
-				//TODO: move stuff to camera class
-				cv::Size fSize(static_cast<int>(640), static_cast<int>(480));
-				cv::resize(Frame, ResizedRecordingFrame, fSize);
+			{	
+				cv::resize(Frame, ResizedRecordingFrame, this->Camera.getCameraFeedSize());
+				cv::putText(Frame, "[REC]", cv::Point(0, 30), 5, 1, cv::Scalar(0, 0, 225));
 				oVideoWriter.write(ResizedRecordingFrame);
 			}
 			
@@ -34,28 +31,25 @@ void CameraFeed::run()
 }
 
 void CameraFeed::initRecording(bool rec)
-{
-	setRecordingStatus(rec);
+{	
+	recording = rec;
 
-	std::string outputString = QDir::currentPath().toStdString() + "/cam1_video_" + QTime::currentTime().toString("hh_mm_ss").toStdString() + ".avi";
-	double dWidth = 640; //get the width of frames of the video
-	double dHeight = 480; //get the height of frames of the video
-	cv::Size fSize(static_cast<int>(dWidth), static_cast<int>(dHeight));
+	std::string outputString = QDir::currentPath().toStdString() + "/" + this->Camera.getCamerName()+ "_" + QDateTime::currentDateTime().toString("dd_MM_yy_hh_mm_ss").toStdString() + ".avi";
 	int codec = cv::VideoWriter::fourcc('D', 'I', 'V', 'X');
-	oVideoWriter = cv::VideoWriter(outputString, codec, 10, fSize, true);
+	oVideoWriter = cv::VideoWriter(outputString, codec,this->Camera.getCameraFPS(), this->Camera.getCameraFeedSize(), true);
 }
 
 void CameraFeed::releaseRecording(bool rec)
-{
-	setRecordingStatus(rec);
+{	
+	recording = rec;
+
 	oVideoWriter.release();
 }
 
 bool CameraFeed::saveCameraScreenshot()
-{
-	//TODO: Need cameraName in settings
+{	
 	QImage tmp = this->qImageFromOpenCVMat();
-	QString outputString = QDir::currentPath() + "/cam1_" + QTime::currentTime().toString("hh_mm_ss") + ".jpg";
+	QString outputString = QDir::currentPath()+"/" + QString::fromStdString(this->Camera.getCamerName())+ "_" + QDateTime::currentDateTime().toString("dd_MM_yy_hh_mm_ss") + ".jpg";
 	QImageWriter writer(outputString);
 	return writer.write(tmp);
 }

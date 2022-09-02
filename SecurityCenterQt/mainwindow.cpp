@@ -10,13 +10,23 @@ MainWindow::MainWindow(QWidget* parent)	: QMainWindow(parent)
 	// TODO: Use QSettings to load/save data to local registry
 	//TODO: Read camera connection data from settings
 	//TODO: PROP: Just create more video captures or use some sort of worer??
-			
-	VideoCapture_Cam1 = new CameraFeed(HARDCODED_CAMERAID, this);	
-	//VideoCapture_Cam2 = new CameraFeed(HARDCODED_IP_CAMERA1, this);	
-	//VideoCapture_Cam3 = new CameraFeed(HARDCODED_IP_CAMERA2, this);
+
+	//TODO: Load camera settings
+
+	DirectlyConnectedCamera Cam1;
+	Cam1.setCameraFPS(15);
+	Cam1.setCameraName("BuiltIn");
+	Cam1.setCameraFeedSize(640, 480);
+	Cam1.setConnectionValue(HARDCODED_CAMERAID);
+
+	VideoCapture_Cam1 = new CameraFeed(Cam1,this);	
+
+	//VideoCapture_Cam1 = new CameraFeed(HARDCODED_CAMERAID,this);	
+	/*VideoCapture_Cam2 = new CameraFeed(HARDCODED_IP_CAMERA1, this);	
+	VideoCapture_Cam3 = new CameraFeed(HARDCODED_IP_CAMERA2, this);*/
 
 
-	//TODO: Read W/H from settings	
+	//TODO: Read W/H from app settings	
 	//TODO: PROP:  On double click on one, have it in full screen? Y/N
 		
 	connect(VideoCapture_Cam1, &CameraFeed::newPixmapCaptured, this, [&]() {
@@ -42,28 +52,23 @@ void MainWindow::on_StartCameras_button_clicked()
 MainWindow::~MainWindow()
 {
 	VideoCapture_Cam1->terminate();
-	/*VideoCapture_Cam2->terminate();
-	VideoCapture_Cam3->terminate();	*/
+	////VideoCapture_Cam2->terminate();
+	////VideoCapture_Cam3->terminate();
 }
 
 void MainWindow::on_cam1_take_shot_button_clicked()
 {
-	/*QImage tmp = VideoCapture_Cam1->qImageFromOpenCVMat();
-	QString outputString = QDir::currentPath() + "/cam1_" + QTime::currentTime().toString("hh_mm_ss") + ".jpg";
-
-	QImageWriter writer(outputString);*/
-	//if (writer.write(tmp))
-	//{
-	//	//TODO: Some dialog notify success and fail in else
-	//	//TODO: Move to helper class
-	//}	
-
 	if (VideoCapture_Cam1->saveCameraScreenshot())
 	{
-		//TODO: Some dialog notify success and fail in else	
+		QMessageBox::information(this, "Info", "Image saved", "OK");
+	}
+	else
+	{
+		QMessageBox::warning(this, "Error", "Failed to save image", "OK");
 	}
 }
 
+//TODO: In ideal world, this would be signals...
 void MainWindow::on_cam1_record_button_clicked()
 {	
 	if (!recording)

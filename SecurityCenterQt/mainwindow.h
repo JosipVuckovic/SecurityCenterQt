@@ -23,9 +23,7 @@ private slots:
 private:
 	Ui::MainWindowClass ui;	
 	CameraFeed* VideoCapture_Cam1;
-	//CameraFeed* VideoCapture_Cam2;
-	//CameraFeed* VideoCapture_Cam3;
-
-	//TODO: Remove after testing
+/*	CameraFeed* VideoCapture_Cam2;
+	CameraFeed* VideoCapture_Cam3;*/	
 	bool recording = false;
 };
