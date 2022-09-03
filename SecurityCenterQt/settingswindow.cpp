@@ -10,7 +10,6 @@ SettingsWindow::SettingsWindow(QWidget* parent)
 	QIntValidator* intValResolution = new QIntValidator(320, 1080, this);
 	QIntValidator* intValFPS = new QIntValidator(1, 60, this);
 
-	
 	ui.cam1_lineEdit_FPS->setValidator(intValFPS);
 	ui.cam1_lineEdit_Height->setValidator(intValResolution);
 	ui.cam1_lineEdit_Width->setValidator(intValResolution);
@@ -19,36 +18,146 @@ SettingsWindow::SettingsWindow(QWidget* parent)
 	ui.cam1_Type_comboBox->addItem("IP Camera", CameraTypeEnum::IP_CAMERA);
 
 	//CRY!!!
-	auto loadedSettings = loadSettingsFromRegistry(CAM1);
-	auto isIP = loadedSettings->direcltyConnected == nullptr;
-	auto camSettings = isIP ? static_cast<ICamera>(*loadedSettings->ipcamera) : static_cast<ICamera>(*loadedSettings->direcltyConnected);	
-	
-	auto test = camSettings.getCameraEnumType();
-	ui.cam1_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(camSettings.getCameraEnumType()));
-	ui.cam1_lineEdit_Name->setText(QString::fromStdString(camSettings.getCamerName()));
-	ui.cam1_lineEdit_FPS->setText(QString::number(camSettings.getCameraFPS()));
-	auto camSize = camSettings.getCameraFeedSize();
-	ui.cam1_lineEdit_Width ->setText(QString::number(camSize.width));
-	ui.cam1_lineEdit_Height->setText(QString::number(camSize.height));
+	CameraSettingsResult* loadedSettings = loadSettingsFromRegistry(CAM1);
+	if (loadedSettings != nullptr)
+	{
+		auto isIP = loadedSettings->direcltyConnected == nullptr;
+		auto camSettings = isIP ? static_cast<ICamera>(*loadedSettings->ipcamera) : static_cast<ICamera>(*loadedSettings->direcltyConnected);
 
-	//CRY Again..
-	QString conVal;
-	if (isIP)
-	{		
-		conVal = QString::fromStdString(loadedSettings->ipcamera->getConnectionValue());
+		auto test = camSettings.getCameraEnumType();
+		ui.cam1_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(camSettings.getCameraEnumType()));
+		ui.cam1_lineEdit_Name->setText(QString::fromStdString(camSettings.getCamerName()));
+		ui.cam1_lineEdit_FPS->setText(QString::number(camSettings.getCameraFPS()));
+		auto camSize = camSettings.getCameraFeedSize();
+		ui.cam1_lineEdit_Width->setText(QString::number(camSize.width));
+		ui.cam1_lineEdit_Height->setText(QString::number(camSize.height));
+
+		//CRY Again..
+		QString conVal;
+		if (isIP)
+		{
+			conVal = QString::fromStdString(loadedSettings->ipcamera->getConnectionValue());
+		}
+		else
+		{
+			conVal = QString::number(loadedSettings->direcltyConnected->getConnectionValue());
+		}
+
+		ui.cam1_lineEdit_Connection->setText(conVal);
+		ui.cam1_checkBox_Color->setChecked(camSettings.getIsColor());
+	}	
+
+	ui.cam2_lineEdit_FPS->setValidator(intValFPS);
+	ui.cam2_lineEdit_Height->setValidator(intValResolution);
+	ui.cam2_lineEdit_Width->setValidator(intValResolution);
+
+	ui.cam2_Type_comboBox->addItem("Direct/USB", CameraTypeEnum::DIRECT_CONNECT);
+	ui.cam2_Type_comboBox->addItem("IP Camera", CameraTypeEnum::IP_CAMERA);
+
+	loadedSettings = loadSettingsFromRegistry(CAM2);
+	if (loadedSettings != nullptr)
+	{
+		auto isIP = loadedSettings->direcltyConnected == nullptr;
+		auto camSettings = isIP ? static_cast<ICamera>(*loadedSettings->ipcamera) : static_cast<ICamera>(*loadedSettings->direcltyConnected);
+
+		auto test = camSettings.getCameraEnumType();
+		ui.cam2_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(camSettings.getCameraEnumType()));
+		ui.cam2_lineEdit_Name->setText(QString::fromStdString(camSettings.getCamerName()));
+		ui.cam2_lineEdit_FPS->setText(QString::number(camSettings.getCameraFPS()));
+		auto camSize = camSettings.getCameraFeedSize();
+		ui.cam2_lineEdit_Width->setText(QString::number(camSize.width));
+		ui.cam2_lineEdit_Height->setText(QString::number(camSize.height));
+
+		//CRY Again..
+		QString conVal;
+		if (isIP)
+		{
+			conVal = QString::fromStdString(loadedSettings->ipcamera->getConnectionValue());
+		}
+		else
+		{
+			conVal = QString::number(loadedSettings->direcltyConnected->getConnectionValue());
+		}
+
+		ui.cam2_lineEdit_Connection->setText(conVal);
+		ui.cam2_checkBox_Color->setChecked(camSettings.getIsColor());
 	}
-	else
-	{		
-		conVal = QString::number(loadedSettings->direcltyConnected->getConnectionValue());
+
+	ui.cam3_lineEdit_FPS->setValidator(intValFPS);
+	ui.cam3_lineEdit_Height->setValidator(intValResolution);
+	ui.cam3_lineEdit_Width->setValidator(intValResolution);
+
+	ui.cam3_Type_comboBox->addItem("Direct/USB", CameraTypeEnum::DIRECT_CONNECT);
+	ui.cam3_Type_comboBox->addItem("IP Camera", CameraTypeEnum::IP_CAMERA);
+
+	loadedSettings = loadSettingsFromRegistry(CAM3);
+	if (loadedSettings != nullptr)
+	{
+		auto isIP = loadedSettings->direcltyConnected == nullptr;
+		auto camSettings = isIP ? static_cast<ICamera>(*loadedSettings->ipcamera) : static_cast<ICamera>(*loadedSettings->direcltyConnected);
+
+		auto test = camSettings.getCameraEnumType();
+		ui.cam3_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(camSettings.getCameraEnumType()));
+		ui.cam3_lineEdit_Name->setText(QString::fromStdString(camSettings.getCamerName()));
+		ui.cam3_lineEdit_FPS->setText(QString::number(camSettings.getCameraFPS()));
+		auto camSize = camSettings.getCameraFeedSize();
+		ui.cam3_lineEdit_Width->setText(QString::number(camSize.width));
+		ui.cam3_lineEdit_Height->setText(QString::number(camSize.height));
+
+		//CRY Again..
+		QString conVal;
+		if (isIP)
+		{
+			conVal = QString::fromStdString(loadedSettings->ipcamera->getConnectionValue());
+		}
+		else
+		{
+			conVal = QString::number(loadedSettings->direcltyConnected->getConnectionValue());
+		}
+
+		ui.cam3_lineEdit_Connection->setText(conVal);
+		ui.cam3_checkBox_Color->setChecked(camSettings.getIsColor());
 	}
 
-	ui.cam1_lineEdit_Connection->setText(conVal);
-	ui.cam1_checkBox_Color->setChecked(camSettings.getIsColor());
+	ui.cam4_lineEdit_FPS->setValidator(intValFPS);
+	ui.cam4_lineEdit_Height->setValidator(intValResolution);
+	ui.cam4_lineEdit_Width->setValidator(intValResolution);
 
+	ui.cam4_Type_comboBox->addItem("Direct/USB", CameraTypeEnum::DIRECT_CONNECT);
+	ui.cam4_Type_comboBox->addItem("IP Camera", CameraTypeEnum::IP_CAMERA);
+
+	loadedSettings = loadSettingsFromRegistry(CAM3);
+	if (loadedSettings != nullptr)
+	{
+		auto isIP = loadedSettings->direcltyConnected == nullptr;
+		auto camSettings = isIP ? static_cast<ICamera>(*loadedSettings->ipcamera) : static_cast<ICamera>(*loadedSettings->direcltyConnected);
+
+		auto test = camSettings.getCameraEnumType();
+		ui.cam4_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(camSettings.getCameraEnumType()));
+		ui.cam4_lineEdit_Name->setText(QString::fromStdString(camSettings.getCamerName()));
+		ui.cam4_lineEdit_FPS->setText(QString::number(camSettings.getCameraFPS()));
+		auto camSize = camSettings.getCameraFeedSize();
+		ui.cam4_lineEdit_Width->setText(QString::number(camSize.width));
+		ui.cam4_lineEdit_Height->setText(QString::number(camSize.height));
+
+		//CRY Again..
+		QString conVal;
+		if (isIP)
+		{
+			conVal = QString::fromStdString(loadedSettings->ipcamera->getConnectionValue());
+		}
+		else
+		{
+			conVal = QString::number(loadedSettings->direcltyConnected->getConnectionValue());
+		}
+
+		ui.cam4_lineEdit_Connection->setText(conVal);
+		ui.cam4_checkBox_Color->setChecked(camSettings.getIsColor());
+	}
 
 }
 
-SettingsWindow::~SettingsWindow(){}
+SettingsWindow::~SettingsWindow() {}
 
 void SettingsWindow::on_cam1_saveChanges_button_clicked()
 {
@@ -116,12 +225,12 @@ CameraSettingsResult* loadSettingsFromRegistry(QString grpName)
 	result->ipcamera = nullptr;
 	result->direcltyConnected = nullptr;
 
-	settings.beginGroup(grpName);	
+	settings.beginGroup(grpName);
 
 	CameraTypeEnum type = static_cast<CameraTypeEnum>(settings.value(CAMERA_TYPE).toInt());
 
 	if (type == CameraTypeEnum::IP_CAMERA)
-	{		
+	{
 		IPCamera* camera = new IPCamera();
 		camera->setCameraTypeEnum(type);
 		camera->setCameraFeedSize(settings.value(CAMERA_FEED_SIZE_W).toInt(), settings.value(CAMERA_FEED_SIZE_H).toInt());
@@ -150,5 +259,5 @@ CameraSettingsResult* loadSettingsFromRegistry(QString grpName)
 		return result;
 	}
 
-	return nullptr;	
+	return nullptr;
 }

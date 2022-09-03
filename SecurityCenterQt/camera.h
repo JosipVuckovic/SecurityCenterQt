@@ -111,7 +111,7 @@ class DirectlyConnectedCamera : public ICamera
 public:
 
 	DirectlyConnectedCamera(){};
-	~DirectlyConnectedCamera(){};
+	~DirectlyConnectedCamera() {};
 
 	const int getConnectionValue()
 	{
