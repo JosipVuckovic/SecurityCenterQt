@@ -136,12 +136,12 @@
      <rect>
       <x>250</x>
       <y>450</y>
-      <width>75</width>
+      <width>101</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>record</string>
+     <string>Start recording</string>
     </property>
    </widget>
    <widget class="QPushButton" name="settings_button">
@@ -184,12 +184,12 @@
      <rect>
       <x>250</x>
       <y>940</y>
-      <width>75</width>
+      <width>101</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>record</string>
+     <string>Start recording</string>
     </property>
    </widget>
    <widget class="QPushButton" name="cam3_take_shot_button">
@@ -210,12 +210,12 @@
      <rect>
       <x>910</x>
       <y>940</y>
-      <width>75</width>
+      <width>101</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>record</string>
+     <string>Start recording</string>
     </property>
    </widget>
    <widget class="QPushButton" name="cam4_take_shot_button">
@@ -236,12 +236,12 @@
      <rect>
       <x>910</x>
       <y>450</y>
-      <width>75</width>
+      <width>101</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>record</string>
+     <string>Start recording</string>
     </property>
    </widget>
    <widget class="QPushButton" name="cam2_take_shot_button">

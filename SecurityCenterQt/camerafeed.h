@@ -11,7 +11,6 @@
 #define HARDCODED_IP_CAMERA1 "http://192.168.100.15:6677/videofeed?username=CCJDMFKDF&password="
 #define HARDCODED_IP_CAMERA2 "http://192.168.100.39:6677/videofeed?username=CCJDMFKDF&password="
 
-
 //TODO: In far future: Split into workers according to detection and anonimization Y/N
 class CameraFeed : public QThread
 {
