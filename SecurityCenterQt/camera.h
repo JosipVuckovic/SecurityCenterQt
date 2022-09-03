@@ -34,6 +34,16 @@ public:
 		return IsEnabled;
 	}
 
+	const CameraTypeEnum getCameraEnumType()
+	{
+		return CameraType;
+	}
+
+	const bool getIsColor()
+	{
+		return IsColor;
+	}
+
 	void setCameraName(std::string name)
 	{
 		CameraName = name;

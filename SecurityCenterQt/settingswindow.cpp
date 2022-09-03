@@ -11,23 +11,44 @@ SettingsWindow::SettingsWindow(QWidget* parent)
 	QIntValidator* intValFPS = new QIntValidator(1, 60, this);
 
 	
-	//auto cam1Settings = loadSettingsFromRegistry(CAM1);
-
 	ui.cam1_lineEdit_FPS->setValidator(intValFPS);
 	ui.cam1_lineEdit_Height->setValidator(intValResolution);
 	ui.cam1_lineEdit_Width->setValidator(intValResolution);
 
 	ui.cam1_Type_comboBox->addItem("Direct/USB", CameraTypeEnum::DIRECT_CONNECT);
 	ui.cam1_Type_comboBox->addItem("IP Camera", CameraTypeEnum::IP_CAMERA);
+
+	//CRY!!!
+	auto loadedSettings = loadSettingsFromRegistry(CAM1);
+	auto isIP = loadedSettings->direcltyConnected == nullptr;
+	auto camSettings = isIP ? static_cast<ICamera>(*loadedSettings->ipcamera) : static_cast<ICamera>(*loadedSettings->direcltyConnected);	
+	
+	auto test = camSettings.getCameraEnumType();
+	ui.cam1_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(camSettings.getCameraEnumType()));
+	ui.cam1_lineEdit_Name->setText(QString::fromStdString(camSettings.getCamerName()));
+	ui.cam1_lineEdit_FPS->setText(QString::number(camSettings.getCameraFPS()));
+	auto camSize = camSettings.getCameraFeedSize();
+	ui.cam1_lineEdit_Width ->setText(QString::number(camSize.width));
+	ui.cam1_lineEdit_Height->setText(QString::number(camSize.height));
+
+	//CRY Again..
+	QString conVal;
+	if (isIP)
+	{		
+		conVal = QString::fromStdString(loadedSettings->ipcamera->getConnectionValue());
+	}
+	else
+	{		
+		conVal = QString::number(loadedSettings->direcltyConnected->getConnectionValue());
+	}
+
+	ui.cam1_lineEdit_Connection->setText(conVal);
+	ui.cam1_checkBox_Color->setChecked(camSettings.getIsColor());
+
+
 }
 
-SettingsWindow::~SettingsWindow()
-{}
-
-//void SettingsWindow::setDialogValidators()
-//{
-//
-//}
+SettingsWindow::~SettingsWindow(){}
 
 void SettingsWindow::on_cam1_saveChanges_button_clicked()
 {
@@ -100,8 +121,9 @@ CameraSettingsResult* loadSettingsFromRegistry(QString grpName)
 	CameraTypeEnum type = static_cast<CameraTypeEnum>(settings.value(CAMERA_TYPE).toInt());
 
 	if (type == CameraTypeEnum::IP_CAMERA)
-	{
+	{		
 		IPCamera* camera = new IPCamera();
+		camera->setCameraTypeEnum(type);
 		camera->setCameraFeedSize(settings.value(CAMERA_FEED_SIZE_W).toInt(), settings.value(CAMERA_FEED_SIZE_H).toInt());
 		camera->setCameraFPS(settings.value(CAMERA_FPS).toInt());
 		camera->setCameraName(settings.value(CAMERA_NAME).toString().toStdString());
@@ -116,6 +138,7 @@ CameraSettingsResult* loadSettingsFromRegistry(QString grpName)
 	if (type == CameraTypeEnum::DIRECT_CONNECT)
 	{
 		DirectlyConnectedCamera* camera = new DirectlyConnectedCamera();
+		camera->setCameraTypeEnum(type);
 		camera->setCameraFeedSize(settings.value(CAMERA_FEED_SIZE_W).toInt(), settings.value(CAMERA_FEED_SIZE_H).toInt());
 		camera->setCameraFPS(settings.value(CAMERA_FPS).toInt());
 		camera->setCameraName(settings.value(CAMERA_NAME).toString().toStdString());

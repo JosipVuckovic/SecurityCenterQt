@@ -50,8 +50,8 @@ void MainWindow::disableAllButtons()
 {
 	ui.cam1_record_button->setDisabled(true);
 	ui.cam1_take_shot_button->setDisabled(true);
-	ui.cam3_record_button->setDisabled(true);
-	ui.cam3_take_shot_button->setDisabled(true);
+	ui.cam2_record_button->setDisabled(true);
+	ui.cam2_take_shot_button->setDisabled(true);
 	ui.cam3_record_button->setDisabled(true);
 	ui.cam3_take_shot_button->setDisabled(true);
 	ui.cam4_record_button->setDisabled(true);
