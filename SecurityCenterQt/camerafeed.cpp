@@ -58,6 +58,3 @@ bool CameraFeed::saveCameraScreenshot()
 	QImageWriter writer(outputString);
 	return writer.write(tmp);
 }
-
-
-

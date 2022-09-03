@@ -101,11 +101,13 @@
     <QtMoc Include="mainwindow.h" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="camerafeed.cpp" />
+    <ClCompile Include="helpers.cpp" />
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="main.cpp" />
     <QtMoc Include="camerafeed.h" />
     <ClInclude Include="camera.h" />
     <QtMoc Include="settingswindow.h" />
+    <ClInclude Include="helpers.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="settingswindow.cpp" />
     <ClCompile Include="stdafx.cpp">

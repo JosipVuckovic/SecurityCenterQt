@@ -12,12 +12,24 @@ public:
 	MainWindow(QWidget* parent = nullptr);
 	~MainWindow();
 
+	void disableAllButtons();
+
 private slots:
 
 	//void on_<object - name>_<signal - name>(<signal - parameters>); how it needs to look like, can't be generated in designer unlike qt creator
 	void on_StartCameras_button_clicked();
+
 	void on_cam1_take_shot_button_clicked();
 	void on_cam1_record_button_clicked();
+
+	//void on_cam2_take_shot_button_clicked();
+	void on_cam2_record_button_clicked();
+
+	//void on_cam3_take_shot_button_clicked();
+	void on_cam3_record_button_clicked();
+
+	//void on_cam4_take_shot_button_clicked();
+	void on_cam4_record_button_clicked();
 
 	void on_settings_button_clicked();
 
@@ -26,6 +38,10 @@ private:
 	CameraFeed* VideoCapture_Cam1;
 	CameraFeed* VideoCapture_Cam2;
 	CameraFeed* VideoCapture_Cam3;	
-	bool recording = false;
+	CameraFeed* VideoCapture_Cam4;
+	bool recordingCam1 = false;
+	bool recordingCam2 = false;
+	bool recordingCam3 = false;
+	bool recordingCam4 = false;
 };
 

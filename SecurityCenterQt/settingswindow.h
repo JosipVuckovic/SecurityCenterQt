@@ -3,7 +3,6 @@
 #include <QDialog>
 #include "ui_settingswindow.h"
 #include "camera.h"
-#include <variant>
 
 #define CAM1 "CAMERA1"
 #define CAM2 "CAMERA2"

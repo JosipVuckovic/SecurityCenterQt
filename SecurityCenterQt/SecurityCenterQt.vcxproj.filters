@@ -55,6 +55,9 @@
     <ClCompile Include="settingswindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="helpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -69,6 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="helpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

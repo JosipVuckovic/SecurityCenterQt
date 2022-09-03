@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "settingswindow.h"
 #include "camera.h"
-#include <variant>
 
 SettingsWindow::SettingsWindow(QWidget* parent)
 	: QDialog(parent)
@@ -12,6 +11,8 @@ SettingsWindow::SettingsWindow(QWidget* parent)
 	QIntValidator* intValFPS = new QIntValidator(1, 60, this);
 
 	
+	//auto cam1Settings = loadSettingsFromRegistry(CAM1);
+
 	ui.cam1_lineEdit_FPS->setValidator(intValFPS);
 	ui.cam1_lineEdit_Height->setValidator(intValResolution);
 	ui.cam1_lineEdit_Width->setValidator(intValResolution);
@@ -23,10 +24,10 @@ SettingsWindow::SettingsWindow(QWidget* parent)
 SettingsWindow::~SettingsWindow()
 {}
 
-void SettingsWindow::setDialogValidators()
-{
-
-}
+//void SettingsWindow::setDialogValidators()
+//{
+//
+//}
 
 void SettingsWindow::on_cam1_saveChanges_button_clicked()
 {
@@ -126,6 +127,5 @@ CameraSettingsResult* loadSettingsFromRegistry(QString grpName)
 		return result;
 	}
 
-	return nullptr;
-	
+	return nullptr;	
 }
