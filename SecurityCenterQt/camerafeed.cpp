@@ -6,7 +6,7 @@ CameraFeed::CameraFeed(DirectlyConnectedCamera& cam, QObject* parent) : QThread{
 CameraFeed::CameraFeed(IPCamera& cam, QObject* parent) : QThread{ parent }, VideoCapture{ cam.getConnectionValue() }, Camera{ cam }{}
 
 void CameraFeed::run()
-{		
+{
 	if (VideoCapture.isOpened())
 	{
 		while (true)
@@ -27,7 +27,12 @@ void CameraFeed::run()
 			}
 
 		}
-	}	
+	}
+	else
+	{
+		Pixmap = QPixmap::fromImage(QImage(":/MainWindow/noCamera.jpg"));
+		emit newPixmapCaptured();
+	}
 }
 
 void CameraFeed::initRecording(bool rec)
@@ -53,5 +58,6 @@ bool CameraFeed::saveCameraScreenshot()
 	QImageWriter writer(outputString);
 	return writer.write(tmp);
 }
+
 
 

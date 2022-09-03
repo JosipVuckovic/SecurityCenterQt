@@ -105,11 +105,14 @@
     <ClCompile Include="main.cpp" />
     <QtMoc Include="camerafeed.h" />
     <ClInclude Include="camera.h" />
+    <QtMoc Include="settingswindow.h" />
     <ClInclude Include="stdafx.h" />
+    <ClCompile Include="settingswindow.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <QtUic Include="settingswindow.ui" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -29,6 +29,10 @@ public:
 		return CameraFPS;
 	}
 
+	const bool getIsEnabled()
+	{
+		return IsEnabled;
+	}
 
 	void setCameraName(std::string name)
 	{
@@ -50,6 +54,17 @@ public:
 	{
 		CameraType = type;
 	}
+
+	void setIsColor(bool is)
+	{
+
+		IsColor = is;
+	}
+
+	void setIsEnabled(bool ena)
+	{
+		IsEnabled = ena;
+	}
 	
 private:
 	std::string CameraName;
@@ -57,6 +72,7 @@ private:
 	cv::Size CameraFeedSize;
 	int CameraFPS;
 	bool IsColor = true;
+	bool IsEnabled = false;
 };
 
 class IPCamera : public ICamera

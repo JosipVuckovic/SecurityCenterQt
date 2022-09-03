@@ -2,8 +2,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_mainwindow.h"
-
-class CameraFeed;
+#include "camerafeed.h"
 
 class MainWindow : public QMainWindow
 {
@@ -20,10 +19,13 @@ private slots:
 	void on_cam1_take_shot_button_clicked();
 	void on_cam1_record_button_clicked();
 
+	void on_settings_button_clicked();
+
 private:
 	Ui::MainWindowClass ui;	
 	CameraFeed* VideoCapture_Cam1;
-/*	CameraFeed* VideoCapture_Cam2;
-	CameraFeed* VideoCapture_Cam3;*/	
+	CameraFeed* VideoCapture_Cam2;
+	CameraFeed* VideoCapture_Cam3;	
 	bool recording = false;
 };
+
