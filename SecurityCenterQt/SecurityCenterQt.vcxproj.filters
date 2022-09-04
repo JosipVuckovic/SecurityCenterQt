@@ -55,7 +55,7 @@
     <ClCompile Include="settingswindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="helpers.cpp">
+    <ClCompile Include="clickablelabel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -69,12 +69,12 @@
     <QtMoc Include="settingswindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="clickablelabel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="helpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

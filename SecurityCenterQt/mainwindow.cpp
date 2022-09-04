@@ -2,8 +2,6 @@
 #include "mainwindow.h"
 #include "camerafeed.h"
 #include "settingswindow.h"
-#include "helpers.h"
-
 
 MainWindow::MainWindow(QWidget* parent)	: QMainWindow(parent)
 {
@@ -21,12 +19,11 @@ MainWindow::MainWindow(QWidget* parent)	: QMainWindow(parent)
 	VideoCapture_Cam3 = new CameraFeed(Cam3, this);
 	VideoCapture_Cam4 = new CameraFeed(Cam4, this);
 	
-
-	//VideoCapture_Cam4 = InitializeCameraFeed(VideoCapture_Cam4, Cam4, this);
-	
-
 	//TODO: Read W/H from app settings N:No time...
 	//TODO: PROP:  On double click on one, have it in full screen? Y/N N
+		
+	connect(ui.cam1, SIGNAL(clicked()), this, SLOT(label1clicked()));
+
 		
 	connect(VideoCapture_Cam1, &CameraFeed::newPixmapCaptured, this, [&]() {
 		ui.cam1->setPixmap(VideoCapture_Cam1->pixmap().scaled(640, 480));
