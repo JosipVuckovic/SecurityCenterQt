@@ -11,9 +11,7 @@
 class CameraFeed : public QThread
 {
 	Q_OBJECT
-public:		
-	
-	//CameraFeed(Camera& cam, QObject* parent = nullptr);
+public:				
 	CameraFeed(Camera cam, QObject* parent = nullptr);
 	~CameraFeed(){};
 
@@ -27,6 +25,11 @@ public:
 		return QImage((unsigned char*)mFrame.data, mFrame.cols, mFrame.rows, QImage::Format_RGB888).rgbSwapped(); //Converts OpenCV BGR to RGB
 	}
 
+	Camera& getCameraToModify()
+	{
+		return mCamera;
+	}
+
 	const bool& isIsRecieving()
 	{
 		return mIsRecieving;
@@ -35,6 +38,16 @@ public:
 	void setIsRecieving(bool is)
 	{
 		mIsRecieving = is;
+	}
+
+	void setVideoCapture(std::string conVar)
+	{
+		mVideoCapture = cv::VideoCapture(conVar);
+	}
+
+	void setVideoCapture(int conVar)
+	{
+		mVideoCapture = cv::VideoCapture(conVar);
 	}
 
 	void releaseRecording(bool rec);

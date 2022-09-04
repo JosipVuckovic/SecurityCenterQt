@@ -31,6 +31,8 @@ public:
 	void  showOkDialog(QWidget* parent);
 	void  showFailedDialog(QWidget* parent);
 	void fillDataForForm();
+signals:
+	void settingSaved();
 
 private slots:
 	void on_cam1_saveChanges_button_clicked();

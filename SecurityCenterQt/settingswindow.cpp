@@ -105,6 +105,7 @@ void SettingsWindow::on_cam1_saveChanges_button_clicked()
 		ui.cam1_lineEdit_Connection->text(),
 		ui.cam1_checkBox_Color->isChecked()))
 	{
+		emit settingSaved();
 		showOkDialog(this);
 	}
 	else
@@ -125,6 +126,7 @@ void SettingsWindow::on_cam2_saveChanges_button_clicked()
 		ui.cam2_lineEdit_Connection->text(),
 		ui.cam2_checkBox_Color->isChecked()))
 	{
+		emit settingSaved();
 		showOkDialog(this);
 	}
 	else
@@ -145,6 +147,7 @@ void SettingsWindow::on_cam3_saveChanges_button_clicked()
 		ui.cam3_lineEdit_Connection->text(),
 		ui.cam3_checkBox_Color->isChecked()))
 	{
+		emit settingSaved();
 		showOkDialog(this);
 	}
 	else
@@ -165,6 +168,7 @@ void SettingsWindow::on_cam4_saveChanges_button_clicked()
 		ui.cam4_lineEdit_Connection->text(),
 		ui.cam4_checkBox_Color->isChecked()))
 	{
+		emit settingSaved();
 		showOkDialog(this);
 	}
 	else

@@ -8,46 +8,7 @@ MainWindow::MainWindow(QWidget* parent)	: QMainWindow(parent)
 	ui.setupUi(this);
 			
 	disableAllButtons();
-
-	Camera Cam1 = loadSettingsFromRegistry(CAM1);
-	Camera Cam2 = loadSettingsFromRegistry(CAM2);
-	Camera Cam3 = loadSettingsFromRegistry(CAM3);
-	Camera Cam4 = loadSettingsFromRegistry(CAM4);
-	
-	VideoCapture_Cam1 = new CameraFeed(Cam1, this);
-	VideoCapture_Cam2 = new CameraFeed(Cam2, this);
-	VideoCapture_Cam3 = new CameraFeed(Cam3, this);
-	VideoCapture_Cam4 = new CameraFeed(Cam4, this);
-	
-	//TODO: Read W/H from app settings N:No time...
-	//TODO: PROP:  On double click on one, have it in full screen? Y/N N
-		
-	connect(ui.cam1, SIGNAL(clicked()), this, SLOT(label1clicked()));
-
-		
-	connect(VideoCapture_Cam1, &CameraFeed::newPixmapCaptured, this, [&]() {
-		ui.cam1->setPixmap(VideoCapture_Cam1->pixmap().scaled(640, 480));
-		ui.cam1_record_button->setEnabled(VideoCapture_Cam1->isIsRecieving());
-		ui.cam1_take_shot_button->setEnabled(VideoCapture_Cam1->isIsRecieving());
-		});	
-
-	connect(VideoCapture_Cam2, &CameraFeed::newPixmapCaptured, this, [&]() {
-		ui.cam2->setPixmap(VideoCapture_Cam2->pixmap().scaled(640, 480));
-		ui.cam2_record_button->setEnabled(VideoCapture_Cam2->isIsRecieving());
-		ui.cam2_take_shot_button->setEnabled(VideoCapture_Cam2->isIsRecieving());
-		});
-
-	connect(VideoCapture_Cam3, &CameraFeed::newPixmapCaptured, this, [&]() {
-		ui.cam3->setPixmap(VideoCapture_Cam3->pixmap().scaled(640, 480));
-		ui.cam3_record_button->setEnabled(VideoCapture_Cam3->isIsRecieving());
-		ui.cam3_take_shot_button->setEnabled(VideoCapture_Cam3->isIsRecieving());
-		});
-
-	connect(VideoCapture_Cam4, &CameraFeed::newPixmapCaptured, this, [&]() {
-		ui.cam4->setPixmap(VideoCapture_Cam4->pixmap().scaled(640, 480));
-		ui.cam4_record_button->setEnabled(VideoCapture_Cam4->isIsRecieving());
-		ui.cam4_take_shot_button->setEnabled(VideoCapture_Cam4->isIsRecieving());
-		});
+	setupCameras();	
 }
 
 void MainWindow::disableAllButtons()
@@ -62,15 +23,15 @@ void MainWindow::disableAllButtons()
 	ui.cam4_take_shot_button->setDisabled(true);
 }
 
-void MainWindow::on_StartCameras_button_clicked()
-{	
-		VideoCapture_Cam1->start();
-		VideoCapture_Cam2->start();
-		VideoCapture_Cam3->start();
-		VideoCapture_Cam4->start();
+void MainWindow::startAllCameras()
+{
+	VideoCapture_Cam1->start();
+	VideoCapture_Cam2->start();
+	VideoCapture_Cam3->start();
+	VideoCapture_Cam4->start();
 }
 
-MainWindow::~MainWindow()
+void MainWindow::terminateAllCameras()
 {
 	VideoCapture_Cam1->terminate();
 	delete VideoCapture_Cam1;
@@ -83,6 +44,17 @@ MainWindow::~MainWindow()
 
 	VideoCapture_Cam4->terminate();
 	delete VideoCapture_Cam4;
+}
+
+void MainWindow::on_StartCameras_button_clicked()
+{	
+	startAllCameras();
+	ui.StartCameras_button->setDisabled(true);
+}
+
+MainWindow::~MainWindow()
+{
+	terminateAllCameras();
 }
 
 void MainWindow::on_cam1_take_shot_button_clicked()
@@ -200,7 +172,14 @@ void MainWindow::on_cam4_record_button_clicked()
 
 void MainWindow::on_settings_button_clicked()
 {	
-	SettingsWindow setttingsWindow(this);
+	SettingsWindow setttingsWindow(this);		
+	connect(&setttingsWindow, &SettingsWindow::settingSaved, this, [&]() {
+		terminateAllCameras();
+		setupCameras(); 
+		startAllCameras();
+		ui.StartCameras_button->setDisabled(true);
+		});
+
 	setttingsWindow.exec();	
 }
 
@@ -214,4 +193,43 @@ void MainWindow::failedTakeShot()
 	QMessageBox::critical(this, "Error", "Failed to save image", QMessageBox::Ok);
 }
 
+void MainWindow::setupCameras()
+{
+	Camera Cam1 = loadSettingsFromRegistry(CAM1);
+	Camera Cam2 = loadSettingsFromRegistry(CAM2);
+	Camera Cam3 = loadSettingsFromRegistry(CAM3);
+	Camera Cam4 = loadSettingsFromRegistry(CAM4);
+
+	VideoCapture_Cam1 = new CameraFeed(Cam1, this);
+	VideoCapture_Cam2 = new CameraFeed(Cam2, this);
+	VideoCapture_Cam3 = new CameraFeed(Cam3, this);
+	VideoCapture_Cam4 = new CameraFeed(Cam4, this);
+
+	//TODO: Read W/H from app settings N:No time...
+	//TODO: PROP:  On double click on one, have it in full screen? Y/N N
+
+	connect(VideoCapture_Cam1, &CameraFeed::newPixmapCaptured, this, [&]() {
+		ui.cam1->setPixmap(VideoCapture_Cam1->pixmap().scaled(640, 480));
+		ui.cam1_record_button->setEnabled(VideoCapture_Cam1->isIsRecieving());
+		ui.cam1_take_shot_button->setEnabled(VideoCapture_Cam1->isIsRecieving());
+		});
+
+	connect(VideoCapture_Cam2, &CameraFeed::newPixmapCaptured, this, [&]() {
+		ui.cam2->setPixmap(VideoCapture_Cam2->pixmap().scaled(640, 480));
+		ui.cam2_record_button->setEnabled(VideoCapture_Cam2->isIsRecieving());
+		ui.cam2_take_shot_button->setEnabled(VideoCapture_Cam2->isIsRecieving());
+		});
+
+	connect(VideoCapture_Cam3, &CameraFeed::newPixmapCaptured, this, [&]() {
+		ui.cam3->setPixmap(VideoCapture_Cam3->pixmap().scaled(640, 480));
+		ui.cam3_record_button->setEnabled(VideoCapture_Cam3->isIsRecieving());
+		ui.cam3_take_shot_button->setEnabled(VideoCapture_Cam3->isIsRecieving());
+		});
+
+	connect(VideoCapture_Cam4, &CameraFeed::newPixmapCaptured, this, [&]() {
+		ui.cam4->setPixmap(VideoCapture_Cam4->pixmap().scaled(640, 480));
+		ui.cam4_record_button->setEnabled(VideoCapture_Cam4->isIsRecieving());
+		ui.cam4_take_shot_button->setEnabled(VideoCapture_Cam4->isIsRecieving());
+		});
+}
 
