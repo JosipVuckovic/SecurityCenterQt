@@ -2,51 +2,73 @@
 #include "camerafeed.h"
 #include <opencv2/opencv.hpp>
 
-CameraFeed::CameraFeed(DirectlyConnectedCamera& cam, QObject* parent) : QThread{ parent }, VideoCapture{ cam.getConnectionValue() }, Camera{cam}{}
-CameraFeed::CameraFeed(IPCamera& cam, QObject* parent) : QThread{ parent }, VideoCapture{ cam.getConnectionValue() }, Camera{ cam }{}
+//CameraFeed::CameraFeed(Camera& cam, QObject* parent) : QThread{ parent }, mCamera{ cam }
+//{	
+//	if (cam.getCameraEnumType() == CameraTypeEnum::DIRECT_CONNECT )
+//	{
+//		 mVideoCapture = cv::VideoCapture(cam.getCameraConnectionString().toInt());
+//	}
+//	else
+//	{
+//		mVideoCapture = cv::VideoCapture(cam.getCameraConnectionString().toStdString());
+//	}	
+//}
+
+CameraFeed::CameraFeed(Camera cam, QObject* parent) : QThread{ parent }, mCamera{ cam }
+{
+	if (cam.getCameraEnumType() == CameraTypeEnum::DIRECT_CONNECT)
+	{
+		mVideoCapture = cv::VideoCapture(cam.getCameraConnectionString().toInt());
+	}
+	else
+	{
+		mVideoCapture = cv::VideoCapture(cam.getCameraConnectionString().toStdString());
+	}
+}
+
+
 
 void CameraFeed::run()
 {
-	if (VideoCapture.isOpened())
+	if (mVideoCapture.isOpened())
 	{
 		while (true)
 		{
-			VideoCapture >> Frame;
+			mVideoCapture >> mFrame;
 
-			if (recording)
+			if (mRecording)
 			{	
-				cv::resize(Frame, ResizedRecordingFrame, this->Camera.getCameraFeedSize());
-				cv::putText(Frame, "[REC]", cv::Point(0, 30), 5, 1, cv::Scalar(0, 0, 225));
-				oVideoWriter.write(ResizedRecordingFrame);
+				cv::resize(mFrame, mResizedRecordingFrame, this->mCamera.getCameraFeedSize());
+				cv::putText(mFrame, "[REC]", cv::Point(0, 30), 5, 1, cv::Scalar(0, 0, 225));
+				oVideoWriter.write(mResizedRecordingFrame);
 			}
 			
-			if (!Frame.empty())
+			if (!mFrame.empty())
 			{				
-				Pixmap = QPixmap::fromImage(qImageFromOpenCVMat());
+				mPixmap = QPixmap::fromImage(qImageFromOpenCVMat());
 				emit newPixmapCaptured();
 			}
-
 		}
 	}
 	else
 	{
-		Pixmap = QPixmap::fromImage(QImage(":/MainWindow/noCamera.jpg"));
+		mPixmap = QPixmap::fromImage(QImage(":/MainWindow/noCamera.jpg"));
 		emit newPixmapCaptured();
 	}
 }
 
 void CameraFeed::initRecording(bool rec)
 {	
-	recording = rec;
+	mRecording = rec;
 
-	std::string outputString = QDir::currentPath().toStdString() + "/" + this->Camera.getCamerName()+ "_" + QDateTime::currentDateTime().toString("dd_MM_yy_hh_mm_ss").toStdString() + ".avi";
+	std::string outputString = QDir::currentPath().toStdString() + "/" + this->mCamera.getCamerName().toStdString() + "_" + QDateTime::currentDateTime().toString("dd_MM_yy_hh_mm_ss").toStdString() + ".avi";
 	int codec = cv::VideoWriter::fourcc('D', 'I', 'V', 'X');
-	oVideoWriter = cv::VideoWriter(outputString, codec,this->Camera.getCameraFPS(), this->Camera.getCameraFeedSize(), true);
+	oVideoWriter = cv::VideoWriter(outputString, codec,this->mCamera.getCameraFPS(), this->mCamera.getCameraFeedSize(), true);
 }
 
 void CameraFeed::releaseRecording(bool rec)
 {	
-	recording = rec;
+	mRecording = rec;
 
 	oVideoWriter.release();
 }
@@ -54,7 +76,7 @@ void CameraFeed::releaseRecording(bool rec)
 bool CameraFeed::saveCameraScreenshot()
 {	
 	QImage tmp = this->qImageFromOpenCVMat();
-	QString outputString = QDir::currentPath()+"/" + QString::fromStdString(this->Camera.getCamerName())+ "_" + QDateTime::currentDateTime().toString("dd_MM_yy_hh_mm_ss") + ".jpg";
+	QString outputString = QDir::currentPath()+"/" + this->mCamera.getCamerName()+ "_" + QDateTime::currentDateTime().toString("dd_MM_yy_hh_mm_ss") + ".jpg";
 	QImageWriter writer(outputString);
 	return writer.write(tmp);
 }

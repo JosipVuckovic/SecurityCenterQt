@@ -16,16 +16,7 @@
 #define CAMERA_IS_COLOR "CAMERA_IS_COLOR"
 #define CAMERA_CONNVALL "CAMERA_CONNECTION"
 
-struct CameraSettingsResult
-{
-
-	~CameraSettingsResult(){};
-
-	IPCamera* ipcamera;
-	DirectlyConnectedCamera* direcltyConnected;
-};
-
-CameraSettingsResult* loadSettingsFromRegistry(QString grpName);
+Camera loadSettingsFromRegistry(QString grpName);
 
 class SettingsWindow : public QDialog, public Ui::SettingsWindowClass
 {
@@ -42,7 +33,14 @@ public:
 
 private slots:
 	void on_cam1_saveChanges_button_clicked();
+	void on_cam2_saveChanges_button_clicked();
+	void on_cam3_saveChanges_button_clicked();
+	void on_cam4_saveChanges_button_clicked();
 	void on_cam1_Type_comboBox_currentIndexChanged(int index);
+	void on_cam2_Type_comboBox_currentIndexChanged(int index);
+	void on_cam3_Type_comboBox_currentIndexChanged(int index);
+	void on_cam4_Type_comboBox_currentIndexChanged(int index);
+	
 private:
 	Ui::SettingsWindowClass ui;
 };

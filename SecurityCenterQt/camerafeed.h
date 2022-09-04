@@ -16,24 +16,24 @@ class CameraFeed : public QThread
 {
 	Q_OBJECT
 public:		
-	CameraFeed(DirectlyConnectedCamera& cam, QObject* parent = nullptr);
-	CameraFeed(IPCamera& cam, QObject* parent = nullptr);
 	
+	//CameraFeed(Camera& cam, QObject* parent = nullptr);
+	CameraFeed(Camera cam, QObject* parent = nullptr);
 	~CameraFeed(){};
 
 	QPixmap pixmap()
 	{
-		return Pixmap;
+		return mPixmap;
 	}
 
 	QImage qImageFromOpenCVMat()
 	{
-		return QImage((unsigned char*)Frame.data, Frame.cols, Frame.rows, QImage::Format_RGB888).rgbSwapped(); //Converts OpenCV BGR to RGB
+		return QImage((unsigned char*)mFrame.data, mFrame.cols, mFrame.rows, QImage::Format_RGB888).rgbSwapped(); //Converts OpenCV BGR to RGB
 	}
 
 	const bool isCameraSet()
 	{
-		return Camera.getIsEnabled();
+		return mCamera.getIsEnabled();
 	}
 
 	void releaseRecording(bool rec);
@@ -49,12 +49,12 @@ protected:
 	
 
 private:
-	bool recording = false;
-	ICamera Camera;
-	QPixmap Pixmap;
-	cv::Mat Frame;
-	cv::VideoCapture VideoCapture;
-	cv::Mat ResizedRecordingFrame;	
+	bool mRecording = false;
+	Camera mCamera;
+	QPixmap mPixmap;
+	cv::Mat mFrame;
+	cv::VideoCapture mVideoCapture;
+	cv::Mat mResizedRecordingFrame;	
 	cv::VideoWriter oVideoWriter;
 };
 

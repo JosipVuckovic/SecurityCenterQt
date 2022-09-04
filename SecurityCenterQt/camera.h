@@ -10,119 +10,91 @@ enum CameraTypeEnum
 };
 
 
-class ICamera
-{	
+class Camera
+{
 public:
-	virtual ~ICamera(){};
-	const std::string getCamerName()
+	Camera() {};
+	~Camera() {};
+
+	const QString& getCameraConnectionString()
 	{
-		return CameraName;
+		return mCameraConnectionString;
 	}
 
-	const cv::Size getCameraFeedSize()
+	const QString& getCamerName()
 	{
-		return CameraFeedSize;
+		return mCameraName;
 	}
 
-	const int getCameraFPS()
+	const cv::Size& getCameraFeedSize()
 	{
-		return CameraFPS;
+		return mCameraFeedSize;
 	}
 
-	const bool getIsEnabled()
+	const int& getCameraFPS()
 	{
-		return IsEnabled;
+		return mCameraFPS;
 	}
 
-	const CameraTypeEnum getCameraEnumType()
+	const bool& getIsEnabled()
 	{
-		return CameraType;
+		return mIsEnabled;
 	}
 
-	const bool getIsColor()
+	const CameraTypeEnum& getCameraEnumType()
 	{
-		return IsColor;
+		return mCameraType;
 	}
 
-	void setCameraName(std::string name)
+	const bool& getIsColor()
 	{
-		CameraName = name;
+		return mIsColor;
+	}
+
+	void setCameraName(QString name)
+	{
+		mCameraName = name;
 	}
 
 	void setCameraFPS(int fps)
 	{
-		CameraFPS = fps;
-	}		 
+		mCameraFPS = fps;
+	}
 
 	void setCameraFeedSize(int w, int h)
 	{
-		CameraFeedSize.width = w;
-		CameraFeedSize.height = h;
+		mCameraFeedSize.width = w;
+		mCameraFeedSize.height = h;
 	}
 
 	void setCameraTypeEnum(CameraTypeEnum type)
 	{
-		CameraType = type;
+		mCameraType = type;
 	}
 
 	void setIsColor(bool is)
 	{
 
-		IsColor = is;
+		mIsColor = is;
 	}
 
 	void setIsEnabled(bool ena)
 	{
-		IsEnabled = ena;
+		mIsEnabled = ena;
 	}
-	
-private:
-	std::string CameraName;
-	CameraTypeEnum CameraType;
-	cv::Size CameraFeedSize;
-	int CameraFPS;
-	bool IsColor = true;
-	bool IsEnabled = false;
-};
 
-class IPCamera : public ICamera
-{
-public:
-
-	IPCamera(){};
-	~IPCamera(){};
-
-	const std::string getConnectionValue() 
+	void setCameraConnectionString(QString conVal)
 	{
-		return CameraConnectionString;
-	}
-	void setConnectionValue(std::string connVal)
-	{
-		CameraConnectionString = connVal;
-	}
-	
-private:
-	std::string CameraConnectionString;
-	
-};
-
-class DirectlyConnectedCamera : public ICamera
-{
-public:
-
-	DirectlyConnectedCamera(){};
-	~DirectlyConnectedCamera() {};
-
-	const int getConnectionValue()
-	{
-		return CameraId;
-	}
-	void setConnectionValue(int camId)
-	{
-		CameraId = camId;
+		mCameraConnectionString = conVal;
 	}
 
 private:
-	int CameraId;
+	QString mCameraName;
+	QString mCameraConnectionString;
+	CameraTypeEnum mCameraType;
+	cv::Size mCameraFeedSize;
+	int mCameraFPS;
+	bool mIsColor = true;
+	bool mIsEnabled = false;
 };
 

@@ -11,17 +11,18 @@ MainWindow::MainWindow(QWidget* parent)	: QMainWindow(parent)
 			
 	disableAllButtons();
 
-	CameraSettingsResult* Cam1 = loadSettingsFromRegistry(CAM1);
-	VideoCapture_Cam1 = InitializeCameraFeed(VideoCapture_Cam1, Cam1, this);
+	Camera Cam1 = loadSettingsFromRegistry(CAM1);
+	Camera Cam2 = loadSettingsFromRegistry(CAM2);
+	Camera Cam3 = loadSettingsFromRegistry(CAM3);
+	Camera Cam4 = loadSettingsFromRegistry(CAM4);
 	
-	CameraSettingsResult* Cam2 = loadSettingsFromRegistry(CAM2);
-	VideoCapture_Cam2 = InitializeCameraFeed(VideoCapture_Cam2, Cam2, this);	
+	VideoCapture_Cam1 = new CameraFeed(Cam1, this);
+	VideoCapture_Cam2 = new CameraFeed(Cam2, this);
+	VideoCapture_Cam3 = new CameraFeed(Cam3, this);
+	VideoCapture_Cam4 = new CameraFeed(Cam4, this);
+	
 
-	CameraSettingsResult* Cam3 = loadSettingsFromRegistry(CAM3);
-	VideoCapture_Cam3 = InitializeCameraFeed(VideoCapture_Cam3, Cam3, this);	
-
-	CameraSettingsResult* Cam4 = loadSettingsFromRegistry(CAM4);
-	VideoCapture_Cam4 = InitializeCameraFeed(VideoCapture_Cam4, Cam4, this);
+	//VideoCapture_Cam4 = InitializeCameraFeed(VideoCapture_Cam4, Cam4, this);
 	
 
 	//TODO: Read W/H from app settings N:No time...
