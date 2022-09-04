@@ -2,18 +2,6 @@
 #include "camerafeed.h"
 #include <opencv2/opencv.hpp>
 
-//CameraFeed::CameraFeed(Camera& cam, QObject* parent) : QThread{ parent }, mCamera{ cam }
-//{	
-//	if (cam.getCameraEnumType() == CameraTypeEnum::DIRECT_CONNECT )
-//	{
-//		 mVideoCapture = cv::VideoCapture(cam.getCameraConnectionString().toInt());
-//	}
-//	else
-//	{
-//		mVideoCapture = cv::VideoCapture(cam.getCameraConnectionString().toStdString());
-//	}	
-//}
-
 CameraFeed::CameraFeed(Camera cam, QObject* parent) : QThread{ parent }, mCamera{ cam }
 {
 	if (cam.getCameraEnumType() == CameraTypeEnum::DIRECT_CONNECT)
@@ -26,20 +14,20 @@ CameraFeed::CameraFeed(Camera cam, QObject* parent) : QThread{ parent }, mCamera
 	}
 }
 
-
-
 void CameraFeed::run()
 {
 	if (mVideoCapture.isOpened())
 	{
+		mIsRecieving = true;
+
 		while (true)
 		{
-			mVideoCapture >> mFrame;
+			mVideoCapture >> mFrame;			
 
 			if (mRecording)
 			{	
 				cv::resize(mFrame, mResizedRecordingFrame, this->mCamera.getCameraFeedSize());
-				cv::putText(mFrame, "[REC]", cv::Point(0, 30), 5, 1, cv::Scalar(0, 0, 225));
+				cv::putText(mFrame, "[REC]", cv::Point(0, 30), 5, 1, cv::Scalar(0, 0, 225));				
 				oVideoWriter.write(mResizedRecordingFrame);
 			}
 			
@@ -52,6 +40,7 @@ void CameraFeed::run()
 	}
 	else
 	{
+		mIsRecieving = false;
 		mPixmap = QPixmap::fromImage(QImage(":/MainWindow/noCamera.jpg"));
 		emit newPixmapCaptured();
 	}

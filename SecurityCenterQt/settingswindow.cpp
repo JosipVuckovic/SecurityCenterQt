@@ -2,10 +2,16 @@
 #include "settingswindow.h"
 #include "camera.h"
 
-SettingsWindow::SettingsWindow(QWidget* parent)
-	: QDialog(parent)
+SettingsWindow::SettingsWindow(QWidget* parent) : QDialog{ parent }
 {
 	ui.setupUi(this);
+	fillDataForForm();
+}
+
+SettingsWindow::~SettingsWindow() {}
+
+void SettingsWindow::fillDataForForm()
+{
 
 	QIntValidator* intValResolution = new QIntValidator(320, 1080, this);
 	QIntValidator* intValFPS = new QIntValidator(1, 60, this);
@@ -19,7 +25,7 @@ SettingsWindow::SettingsWindow(QWidget* parent)
 
 
 	Camera loadedSettings = loadSettingsFromRegistry(CAM1);
-	
+
 	ui.cam1_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(loadedSettings.getCameraEnumType()));
 	ui.cam1_lineEdit_Name->setText(loadedSettings.getCamerName());
 	ui.cam1_lineEdit_FPS->setText(QString::number(loadedSettings.getCameraFPS()));
@@ -28,7 +34,7 @@ SettingsWindow::SettingsWindow(QWidget* parent)
 	ui.cam1_lineEdit_Height->setText(QString::number(camSize.height));
 	ui.cam1_lineEdit_Connection->setText(loadedSettings.getCameraConnectionString());
 	ui.cam1_checkBox_Color->setChecked(loadedSettings.getIsColor());
-	
+
 
 	ui.cam2_lineEdit_FPS->setValidator(intValFPS);
 	ui.cam2_lineEdit_Height->setValidator(intValResolution);
@@ -38,7 +44,7 @@ SettingsWindow::SettingsWindow(QWidget* parent)
 	ui.cam2_Type_comboBox->addItem("IP Camera", CameraTypeEnum::IP_CAMERA);
 
 	loadedSettings = loadSettingsFromRegistry(CAM2);
-	
+
 	ui.cam2_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(loadedSettings.getCameraEnumType()));
 	ui.cam2_lineEdit_Name->setText(loadedSettings.getCamerName());
 	ui.cam2_lineEdit_FPS->setText(QString::number(loadedSettings.getCameraFPS()));
@@ -47,7 +53,7 @@ SettingsWindow::SettingsWindow(QWidget* parent)
 	ui.cam2_lineEdit_Height->setText(QString::number(camSize.height));
 	ui.cam2_lineEdit_Connection->setText(loadedSettings.getCameraConnectionString());
 	ui.cam2_checkBox_Color->setChecked(loadedSettings.getIsColor());
-	
+
 
 	ui.cam3_lineEdit_FPS->setValidator(intValFPS);
 	ui.cam3_lineEdit_Height->setValidator(intValResolution);
@@ -57,7 +63,7 @@ SettingsWindow::SettingsWindow(QWidget* parent)
 	ui.cam3_Type_comboBox->addItem("IP Camera", CameraTypeEnum::IP_CAMERA);
 
 	loadedSettings = loadSettingsFromRegistry(CAM3);
-	
+
 	ui.cam3_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(loadedSettings.getCameraEnumType()));
 	ui.cam3_lineEdit_Name->setText(loadedSettings.getCamerName());
 	ui.cam3_lineEdit_FPS->setText(QString::number(loadedSettings.getCameraFPS()));
@@ -66,7 +72,7 @@ SettingsWindow::SettingsWindow(QWidget* parent)
 	ui.cam3_lineEdit_Height->setText(QString::number(camSize.height));
 	ui.cam3_lineEdit_Connection->setText(loadedSettings.getCameraConnectionString());
 	ui.cam3_checkBox_Color->setChecked(loadedSettings.getIsColor());
-	
+
 
 	ui.cam4_lineEdit_FPS->setValidator(intValFPS);
 	ui.cam4_lineEdit_Height->setValidator(intValResolution);
@@ -76,7 +82,7 @@ SettingsWindow::SettingsWindow(QWidget* parent)
 	ui.cam4_Type_comboBox->addItem("IP Camera", CameraTypeEnum::IP_CAMERA);
 
 	loadedSettings = loadSettingsFromRegistry(CAM3);
-	
+
 	ui.cam4_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(loadedSettings.getCameraEnumType()));
 	ui.cam4_lineEdit_Name->setText(loadedSettings.getCamerName());
 	ui.cam4_lineEdit_FPS->setText(QString::number(loadedSettings.getCameraFPS()));
@@ -85,10 +91,7 @@ SettingsWindow::SettingsWindow(QWidget* parent)
 	ui.cam4_lineEdit_Height->setText(QString::number(camSize.height));
 	ui.cam4_lineEdit_Connection->setText(loadedSettings.getCameraConnectionString());
 	ui.cam4_checkBox_Color->setChecked(loadedSettings.getIsColor());;
-	
 }
-
-SettingsWindow::~SettingsWindow() {}
 
 void SettingsWindow::on_cam1_saveChanges_button_clicked()
 {

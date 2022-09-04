@@ -23,13 +23,14 @@ class SettingsWindow : public QDialog, public Ui::SettingsWindowClass
 	Q_OBJECT
 
 public:
-	SettingsWindow(QWidget *parent = nullptr);
+	SettingsWindow(QWidget* parent = nullptr);
 	~SettingsWindow();
 
-	void setDialogValidators();	
+	void setDialogValidators();
 	bool saveSettingsToRegistry(QString grpName, QVariant camType, QString name, int fps, int w, int h, QVariant camId, bool isColor);
 	void  showOkDialog(QWidget* parent);
 	void  showFailedDialog(QWidget* parent);
+	void fillDataForForm();
 
 private slots:
 	void on_cam1_saveChanges_button_clicked();
@@ -40,7 +41,7 @@ private slots:
 	void on_cam2_Type_comboBox_currentIndexChanged(int index);
 	void on_cam3_Type_comboBox_currentIndexChanged(int index);
 	void on_cam4_Type_comboBox_currentIndexChanged(int index);
-	
+
 private:
 	Ui::SettingsWindowClass ui;
 };

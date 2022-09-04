@@ -12,7 +12,10 @@ public:
 	MainWindow(QWidget* parent = nullptr);
 	~MainWindow();
 
-	void disableAllButtons();
+	void inline disableAllButtons();
+
+	void inline successTakeShot();
+	void inline failedTakeShot();
 
 private slots:
 
@@ -22,17 +25,16 @@ private slots:
 	void on_cam1_take_shot_button_clicked();
 	void on_cam1_record_button_clicked();
 
-	//void on_cam2_take_shot_button_clicked();
+	void on_cam2_take_shot_button_clicked();
 	void on_cam2_record_button_clicked();
 
-	//void on_cam3_take_shot_button_clicked();
+	void on_cam3_take_shot_button_clicked();
 	void on_cam3_record_button_clicked();
 
-	//void on_cam4_take_shot_button_clicked();
+	void on_cam4_take_shot_button_clicked();
 	void on_cam4_record_button_clicked();
 
 	void on_settings_button_clicked();
-
 private:
 	Ui::MainWindowClass ui;	
 	CameraFeed* VideoCapture_Cam1;
