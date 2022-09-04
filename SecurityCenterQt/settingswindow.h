@@ -37,6 +37,8 @@ public:
 
 	void setDialogValidators();	
 	bool saveSettingsToRegistry(QString grpName, QVariant camType, QString name, int fps, int w, int h, QVariant camId, bool isColor);
+	void  showOkDialog(QWidget* parent);
+	void  showFailedDialog(QWidget* parent);
 
 private slots:
 	void on_cam1_saveChanges_button_clicked();

@@ -171,11 +171,11 @@ void SettingsWindow::on_cam1_saveChanges_button_clicked()
 		ui.cam1_lineEdit_Connection->text(),
 		ui.cam1_checkBox_Color->isChecked()))
 	{
-		QMessageBox::information(this, "Success", "", "OK");
+		showOkDialog(this);
 	}
 	else
 	{
-		QMessageBox::critical(this, "ERROR", "Failed to save CAMERA1 settings \n\r Contact your support! ", "OK");
+		showFailedDialog(this);
 	}
 
 }
@@ -260,4 +260,14 @@ CameraSettingsResult* loadSettingsFromRegistry(QString grpName)
 	}
 
 	return nullptr;
+}
+
+void SettingsWindow::showOkDialog(QWidget* parent)
+{
+	QMessageBox::information(parent, "Success", "Camera settings saved successfully", "OK");
+}
+
+void SettingsWindow::showFailedDialog(QWidget* parent)
+{
+	QMessageBox::critical(parent, "ERROR", "Failed to save camera settings \n\r Contact your support! ", "OK");
 }

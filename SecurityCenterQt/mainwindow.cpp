@@ -110,21 +110,25 @@ MainWindow::~MainWindow()
 	if (VideoCapture_Cam1 != nullptr)
 	{
 		VideoCapture_Cam1->terminate();
+		delete VideoCapture_Cam1;
 	}
 
 	if (VideoCapture_Cam2 != nullptr)
 	{
 		VideoCapture_Cam2->terminate();
+		delete VideoCapture_Cam2;
 	}
 
 	if (VideoCapture_Cam3 != nullptr)
 	{
 		VideoCapture_Cam3->terminate();
+		delete VideoCapture_Cam3;
 	}
 
 	if (VideoCapture_Cam4 != nullptr)
 	{
 		VideoCapture_Cam4->terminate();
+		delete VideoCapture_Cam4;
 	}
 }
 
