@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Settings</string>
   </property>
   <widget class="QGroupBox" name="camera1_groupBox">
    <property name="geometry">
@@ -133,12 +133,12 @@
      <rect>
       <x>290</x>
       <y>50</y>
-      <width>49</width>
+      <width>81</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Color</string>
+     <string>Color camera:</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="cam1_lineEdit_Name">
@@ -213,14 +213,14 @@
    <widget class="QCheckBox" name="cam1_checkBox_Color">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>370</x>
       <y>50</y>
       <width>75</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>CheckBox</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="cam1_saveChanges_button">
@@ -345,12 +345,12 @@
      <rect>
       <x>290</x>
       <y>50</y>
-      <width>49</width>
+      <width>81</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Color</string>
+     <string>Color camera:</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="cam2_lineEdit_Name">
@@ -425,14 +425,14 @@
    <widget class="QCheckBox" name="cam2_checkBox_Color">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>370</x>
       <y>50</y>
       <width>75</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>CheckBox</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="cam2_saveChanges_button">
@@ -557,12 +557,12 @@
      <rect>
       <x>290</x>
       <y>50</y>
-      <width>49</width>
+      <width>81</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Color</string>
+     <string>Color camera:</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="cam3_lineEdit_Name">
@@ -637,14 +637,14 @@
    <widget class="QCheckBox" name="cam3_checkBox_Color">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>370</x>
       <y>50</y>
       <width>75</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>CheckBox</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="cam3_saveChanges_button">
@@ -769,12 +769,12 @@
      <rect>
       <x>290</x>
       <y>50</y>
-      <width>49</width>
+      <width>81</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Color</string>
+     <string>Color camera:</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="cam4_lineEdit_Name">
@@ -849,14 +849,14 @@
    <widget class="QCheckBox" name="cam4_checkBox_Color">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>370</x>
       <y>50</y>
       <width>75</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>CheckBox</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="cam4_saveChanges_button">
