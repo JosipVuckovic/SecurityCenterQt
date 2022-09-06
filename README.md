@@ -7,6 +7,17 @@ All settings are written to the local windows registry.
 
 Written in c++ using the QT framework and OpenCV library.
 
+###Settings:
+Go to settings and set up cameras you want to use, initial program is not set up to use any camera.
+CameraType - tells the program how to interpret connection value
+Name - User designation of camera
+Connection - connection string to connect to IP camera, or int index locally connected camera (0 is built in camera)
+FPS and Resoultion fields - used for recording, does not impact camera streaming that is always set to 640 x 480
+
+###Recording
+The program will record video and take pictures to the root program folder.
+
+
 ## Requirements
 ### To develop
 - [QT 6.3](https://www.qt.io/download)
