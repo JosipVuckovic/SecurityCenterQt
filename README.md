@@ -13,10 +13,11 @@ CameraType - tells the program how to interpret connection value <br/>
 Name - User designation of camera <br/>
 Connection - connection string to connect to IP camera, or int index locally connected camera (0 is built in camera) <br/>
 FPS and Resoultion fields - used for recording, does not impact camera streaming that is always set to 640 x 480 <br/>
+Anonymization - When anonymization is turned on, the program will blur rectangles with detected faces. <br/>
 
 ### Recording
-The program will record video and take pictures to the root program folder.
-
+The program will record video and take pictures to the root program folder. <br/>
+Anonymization will not be applied to the recorded video. Recording video will be pure stream from the camera
 
 ## Requirements
 ### To develop
