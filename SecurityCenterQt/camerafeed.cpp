@@ -16,6 +16,19 @@ CameraFeed::CameraFeed(Camera cam, QObject* parent) : QThread{ parent }, mCamera
 
 void CameraFeed::run()
 {
+	cv::CascadeClassifier faceCascade;
+	if (this->mCamera.getIsEnabled())
+	{
+		QTemporaryDir tempDir;
+		if (tempDir.isValid()) {
+			const QString tempFile = tempDir.path() + "/haarcascade_frontalface_default.xml";
+			if (QFile::copy(":/MainWindow/haarcascade_frontalface_default.xml", tempFile)) //File will autoclean when exits the scope
+			{
+				faceCascade.load(tempFile.toStdString()); 
+			}
+		}
+	}
+	
 	if (mVideoCapture.isOpened())
 	{
 		mIsRecieving = true;
@@ -29,8 +42,23 @@ void CameraFeed::run()
 				cv::resize(mFrame, mResizedRecordingFrame, this->mCamera.getCameraFeedSize());
 				cv::putText(mFrame, "[REC]", cv::Point(0, 30), 5, 1, cv::Scalar(0, 0, 225));				
 				oVideoWriter.write(mResizedRecordingFrame);
-			}
+			}	
 			
+			if (!faceCascade.empty())
+			{
+				std::vector<cv::Rect> faces;
+				faceCascade.detectMultiScale(mFrame, faces, 1.1, 2, 0 | cv::CASCADE_SCALE_IMAGE, cv::Size(30, 30));
+
+				for (int i = 0; i < faces.size(); ++i)
+				{
+					cv::Rect r = faces[i];
+					cv::Point p1 = cv::Point(cvRound(r.x), cvRound(r.y));
+					cv::Point p2 = cv::Point(cvRound((r.x + r.width - 1)), cvRound((r.y + r.height - 1)));
+					cv::rectangle(mFrame, p1, p2, { 255,0,0 }, 3, 8, 0);										
+					cv::GaussianBlur(mFrame(cv::Rect(p1, p2)), mFrame(cv::Rect(p1, p2)), cv::Size(0, 0), 30);
+				}
+			}
+
 			if (!mFrame.empty())
 			{				
 				mPixmap = QPixmap::fromImage(qImageFromOpenCVMat());

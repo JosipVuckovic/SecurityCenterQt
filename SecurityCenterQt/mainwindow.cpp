@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget* parent)	: QMainWindow(parent)
 	ui.setupUi(this);
 			
 	disableAllButtons();
-	setupCameras();	
+	setupCameras();		
 }
 
 void MainWindow::disableAllButtons()

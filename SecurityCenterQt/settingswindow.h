@@ -27,7 +27,8 @@ public:
 	~SettingsWindow();
 
 	void setDialogValidators();
-	bool saveSettingsToRegistry(QString grpName, QVariant camType, QString name, int fps, int w, int h, QVariant camId, bool isColor);
+	bool saveSettingsToRegistry(QString grpName, QVariant camType, QString name, int fps, int w, int h, QVariant camId, bool isColor, bool isEnabled = false);
+	//bool saveSettingsToRegistry(QString grpName, QVariant camType, QString name, int fps, int w, int h, QVariant camId, bool isColor, bool isEnabled);
 	void  showOkDialog(QWidget* parent);
 	void  showFailedDialog(QWidget* parent);
 	void fillDataForForm();
@@ -46,4 +47,7 @@ private slots:
 
 private:
 	Ui::SettingsWindowClass ui;
+	QIntValidator* intValResolution;
+	QIntValidator* intValFPS;
+	QIntValidator* intIndex;
 };

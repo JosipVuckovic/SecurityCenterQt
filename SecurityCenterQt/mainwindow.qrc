@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/MainWindow">
         <file>noCamera.jpg</file>
+        <file>haarcascade_frontalface_default.xml</file>
     </qresource>
 </RCC>

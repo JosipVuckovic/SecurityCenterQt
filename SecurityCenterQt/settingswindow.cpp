@@ -8,13 +8,20 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QDialog{ parent }
 	fillDataForForm();
 }
 
-SettingsWindow::~SettingsWindow() {}
+SettingsWindow::~SettingsWindow() 
+{
+	delete intValResolution;
+	delete intValFPS;
+	delete intIndex;
+}
 
 void SettingsWindow::fillDataForForm()
 {
 
-	QIntValidator* intValResolution = new QIntValidator(320, 1080, this);
-	QIntValidator* intValFPS = new QIntValidator(1, 60, this);
+	 intValResolution = new QIntValidator(320, 1080, this);
+	 intValFPS = new QIntValidator(1, 60, this);
+	 intIndex = new QIntValidator(0, 100, this);
+	
 
 	ui.cam1_lineEdit_FPS->setValidator(intValFPS);
 	ui.cam1_lineEdit_Height->setValidator(intValResolution);
@@ -34,6 +41,7 @@ void SettingsWindow::fillDataForForm()
 	ui.cam1_lineEdit_Height->setText(QString::number(camSize.height));
 	ui.cam1_lineEdit_Connection->setText(loadedSettings.getCameraConnectionString());
 	ui.cam1_checkBox_Color->setChecked(loadedSettings.getIsColor());
+	ui.cam1_Anon->setChecked(loadedSettings.getIsEnabled());
 
 
 	ui.cam2_lineEdit_FPS->setValidator(intValFPS);
@@ -53,6 +61,7 @@ void SettingsWindow::fillDataForForm()
 	ui.cam2_lineEdit_Height->setText(QString::number(camSize.height));
 	ui.cam2_lineEdit_Connection->setText(loadedSettings.getCameraConnectionString());
 	ui.cam2_checkBox_Color->setChecked(loadedSettings.getIsColor());
+	ui.cam2_Anon->setChecked(loadedSettings.getIsEnabled());
 
 
 	ui.cam3_lineEdit_FPS->setValidator(intValFPS);
@@ -103,7 +112,8 @@ void SettingsWindow::on_cam1_saveChanges_button_clicked()
 		ui.cam1_lineEdit_Width->text().toInt(),
 		ui.cam1_lineEdit_Height->text().toInt(),
 		ui.cam1_lineEdit_Connection->text(),
-		ui.cam1_checkBox_Color->isChecked()))
+		ui.cam1_checkBox_Color->isChecked(),
+		ui.cam1_Anon->isChecked()))
 	{
 		emit settingSaved();
 		showOkDialog(this);
@@ -124,7 +134,8 @@ void SettingsWindow::on_cam2_saveChanges_button_clicked()
 		ui.cam2_lineEdit_Width->text().toInt(),
 		ui.cam2_lineEdit_Height->text().toInt(),
 		ui.cam2_lineEdit_Connection->text(),
-		ui.cam2_checkBox_Color->isChecked()))
+		ui.cam2_checkBox_Color->isChecked(),
+		ui.cam1_Anon->isChecked()))
 	{
 		emit settingSaved();
 		showOkDialog(this);
@@ -145,7 +156,8 @@ void SettingsWindow::on_cam3_saveChanges_button_clicked()
 		ui.cam3_lineEdit_Width->text().toInt(),
 		ui.cam3_lineEdit_Height->text().toInt(),
 		ui.cam3_lineEdit_Connection->text(),
-		ui.cam3_checkBox_Color->isChecked()))
+		ui.cam3_checkBox_Color->isChecked(),
+		false))
 	{
 		emit settingSaved();
 		showOkDialog(this);
@@ -166,7 +178,8 @@ void SettingsWindow::on_cam4_saveChanges_button_clicked()
 		ui.cam4_lineEdit_Width->text().toInt(),
 		ui.cam4_lineEdit_Height->text().toInt(),
 		ui.cam4_lineEdit_Connection->text(),
-		ui.cam4_checkBox_Color->isChecked()))
+		ui.cam4_checkBox_Color->isChecked(),
+		false))
 	{
 		emit settingSaved();
 		showOkDialog(this);
@@ -179,22 +192,22 @@ void SettingsWindow::on_cam4_saveChanges_button_clicked()
 
 void SettingsWindow::on_cam1_Type_comboBox_currentIndexChanged(int index)
 {
-	index == 0 ? ui.cam1_lineEdit_Connection->setValidator(new QIntValidator(0, 100, this)) : ui.cam1_lineEdit_Connection->setValidator(nullptr);
+	index == 0 ? ui.cam1_lineEdit_Connection->setValidator(intIndex) : ui.cam1_lineEdit_Connection->setValidator(nullptr);
 }
 void SettingsWindow::on_cam2_Type_comboBox_currentIndexChanged(int index)
 {
-	index == 0 ? ui.cam1_lineEdit_Connection->setValidator(new QIntValidator(0, 100, this)) : ui.cam1_lineEdit_Connection->setValidator(nullptr);
+	index == 0 ? ui.cam1_lineEdit_Connection->setValidator(intIndex) : ui.cam1_lineEdit_Connection->setValidator(nullptr);
 }
 void SettingsWindow::on_cam3_Type_comboBox_currentIndexChanged(int index)
 {
-	index == 0 ? ui.cam1_lineEdit_Connection->setValidator(new QIntValidator(0, 100, this)) : ui.cam1_lineEdit_Connection->setValidator(nullptr);
+	index == 0 ? ui.cam1_lineEdit_Connection->setValidator(intIndex) : ui.cam1_lineEdit_Connection->setValidator(nullptr);
 }
 void SettingsWindow::on_cam4_Type_comboBox_currentIndexChanged(int index)
 {
-	index == 0 ? ui.cam1_lineEdit_Connection->setValidator(new QIntValidator(0, 100, this)) : ui.cam1_lineEdit_Connection->setValidator(nullptr);
+	index == 0 ? ui.cam1_lineEdit_Connection->setValidator(intIndex) : ui.cam1_lineEdit_Connection->setValidator(nullptr);
 }
 
-bool SettingsWindow::saveSettingsToRegistry(QString grpName, QVariant camType, QString name, int fps, int w, int h, QVariant camId, bool isColor)
+bool SettingsWindow::saveSettingsToRegistry(QString grpName, QVariant camType, QString name, int fps, int w, int h, QVariant camId, bool isColor, bool isEna)
 {
 	try
 	{
@@ -207,6 +220,7 @@ bool SettingsWindow::saveSettingsToRegistry(QString grpName, QVariant camType, Q
 		settings.setValue(CAMERA_FEED_SIZE_H, h);
 		settings.setValue(CAMERA_CONNVALL, camId);
 		settings.setValue(CAMERA_IS_COLOR, isColor);
+		settings.setValue("ENA", isEna);
 		settings.endGroup();
 
 		return true;
@@ -217,6 +231,7 @@ bool SettingsWindow::saveSettingsToRegistry(QString grpName, QVariant camType, Q
 		return false;
 	}
 }
+
 
 Camera loadSettingsFromRegistry(QString grpName)
 {
@@ -231,6 +246,7 @@ Camera loadSettingsFromRegistry(QString grpName)
 	camera.setCameraName(settings.value(CAMERA_NAME).toString());
 	camera.setCameraConnectionString(settings.value(CAMERA_CONNVALL).toString());
 	camera.setIsColor(settings.value(CAMERA_IS_COLOR).toBool());
+	camera.setIsEnabled(settings.value("ENA").toBool());
 
 	settings.endGroup();
 
