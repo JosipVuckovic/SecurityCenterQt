@@ -29,11 +29,11 @@ void SettingsWindow::fillDataForForm()
 	ui.cam1_lineEdit_Height->setValidator(intValResolution);
 	ui.cam1_lineEdit_Width->setValidator(intValResolution);
 
-	ui.cam1_Type_comboBox->addItem(_directCam, CameraTypeEnum::DIRECT_CONNECT);
-	ui.cam1_Type_comboBox->addItem(_IPcam, CameraTypeEnum::IP_CAMERA);
+	ui.cam1_Type_comboBox->addItem(SCStrings::_directCam, CameraTypeEnum::DIRECT_CONNECT);
+	ui.cam1_Type_comboBox->addItem(SCStrings::_IPcam, CameraTypeEnum::IP_CAMERA);
 
 
-	Camera loadedSettings = loadSettingsFromRegistry(_CAM1);
+	Camera loadedSettings = loadSettingsFromRegistry(SCStrings::_CAM1);
 
 	ui.cam1_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(loadedSettings.getCameraEnumType()));
 	ui.cam1_lineEdit_Name->setText(loadedSettings.getCamerName());
@@ -50,10 +50,10 @@ void SettingsWindow::fillDataForForm()
 	ui.cam2_lineEdit_Height->setValidator(intValResolution);
 	ui.cam2_lineEdit_Width->setValidator(intValResolution);
 
-	ui.cam2_Type_comboBox->addItem(_directCam, CameraTypeEnum::DIRECT_CONNECT);
-	ui.cam2_Type_comboBox->addItem(_IPcam, CameraTypeEnum::IP_CAMERA);
+	ui.cam2_Type_comboBox->addItem(SCStrings::_directCam, CameraTypeEnum::DIRECT_CONNECT);
+	ui.cam2_Type_comboBox->addItem(SCStrings::_IPcam, CameraTypeEnum::IP_CAMERA);
 
-	loadedSettings = loadSettingsFromRegistry(_CAM2);
+	loadedSettings = loadSettingsFromRegistry(SCStrings::_CAM2);
 
 	ui.cam2_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(loadedSettings.getCameraEnumType()));
 	ui.cam2_lineEdit_Name->setText(loadedSettings.getCamerName());
@@ -70,10 +70,10 @@ void SettingsWindow::fillDataForForm()
 	ui.cam3_lineEdit_Height->setValidator(intValResolution);
 	ui.cam3_lineEdit_Width->setValidator(intValResolution);
 
-	ui.cam3_Type_comboBox->addItem(_directCam, CameraTypeEnum::DIRECT_CONNECT);
-	ui.cam3_Type_comboBox->addItem(_IPcam, CameraTypeEnum::IP_CAMERA);
+	ui.cam3_Type_comboBox->addItem(SCStrings::_directCam, CameraTypeEnum::DIRECT_CONNECT);
+	ui.cam3_Type_comboBox->addItem(SCStrings::_IPcam, CameraTypeEnum::IP_CAMERA);
 
-	loadedSettings = loadSettingsFromRegistry(_CAM3);
+	loadedSettings = loadSettingsFromRegistry(SCStrings::_CAM3);
 
 	ui.cam3_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(loadedSettings.getCameraEnumType()));
 	ui.cam3_lineEdit_Name->setText(loadedSettings.getCamerName());
@@ -89,10 +89,10 @@ void SettingsWindow::fillDataForForm()
 	ui.cam4_lineEdit_Height->setValidator(intValResolution);
 	ui.cam4_lineEdit_Width->setValidator(intValResolution);
 
-	ui.cam4_Type_comboBox->addItem(_directCam, CameraTypeEnum::DIRECT_CONNECT);
-	ui.cam4_Type_comboBox->addItem(_IPcam, CameraTypeEnum::IP_CAMERA);
+	ui.cam4_Type_comboBox->addItem(SCStrings::_directCam, CameraTypeEnum::DIRECT_CONNECT);
+	ui.cam4_Type_comboBox->addItem(SCStrings::_IPcam, CameraTypeEnum::IP_CAMERA);
 
-	loadedSettings = loadSettingsFromRegistry(_CAM4);
+	loadedSettings = loadSettingsFromRegistry(SCStrings::_CAM4);
 
 	ui.cam4_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(loadedSettings.getCameraEnumType()));
 	ui.cam4_lineEdit_Name->setText(loadedSettings.getCamerName());
@@ -107,7 +107,7 @@ void SettingsWindow::fillDataForForm()
 void SettingsWindow::on_cam1_saveChanges_button_clicked()
 {
 	if (saveSettingsToRegistry(
-		_CAM1,
+		SCStrings::_CAM1,
 		ui.cam1_Type_comboBox->currentData(),
 		ui.cam1_lineEdit_Name->text(),
 		ui.cam1_lineEdit_FPS->text().toInt(),
@@ -129,7 +129,7 @@ void SettingsWindow::on_cam1_saveChanges_button_clicked()
 void SettingsWindow::on_cam2_saveChanges_button_clicked()
 {
 	if (saveSettingsToRegistry(
-		_CAM2,
+		SCStrings::_CAM2,
 		ui.cam2_Type_comboBox->currentData(),
 		ui.cam2_lineEdit_Name->text(),
 		ui.cam2_lineEdit_FPS->text().toInt(),
@@ -151,7 +151,7 @@ void SettingsWindow::on_cam2_saveChanges_button_clicked()
 void SettingsWindow::on_cam3_saveChanges_button_clicked()
 {
 	if (saveSettingsToRegistry(
-		_CAM3,
+		SCStrings::_CAM3,
 		ui.cam3_Type_comboBox->currentData(),
 		ui.cam3_lineEdit_Name->text(),
 		ui.cam3_lineEdit_FPS->text().toInt(),
@@ -173,7 +173,7 @@ void SettingsWindow::on_cam3_saveChanges_button_clicked()
 void SettingsWindow::on_cam4_saveChanges_button_clicked()
 {
 	if (saveSettingsToRegistry(
-		_CAM4,
+		SCStrings::_CAM4,
 		ui.cam4_Type_comboBox->currentData(),
 		ui.cam4_lineEdit_Name->text(),
 		ui.cam4_lineEdit_FPS->text().toInt(),
@@ -215,14 +215,14 @@ bool SettingsWindow::saveSettingsToRegistry(QString grpName, QVariant camType, Q
 	{
 		QSettings settings;
 		settings.beginGroup(grpName);
-		settings.setValue(_CAMERA_TYPE, camType);
-		settings.setValue(_CAMERA_NAME, name);
-		settings.setValue(_CAMERA_FPS, fps);
-		settings.setValue(_CAMERA_FEED_SIZE_W, w);
-		settings.setValue(_CAMERA_FEED_SIZE_H, h);
-		settings.setValue(_CAMERA_CONNVALL, camId);
-		settings.setValue(_CAMERA_IS_COLOR, isColor);
-		settings.setValue(_ENA, isEna);
+		settings.setValue(SCStrings::_CAMERA_TYPE, camType);
+		settings.setValue(SCStrings::_CAMERA_NAME, name);
+		settings.setValue(SCStrings::_CAMERA_FPS, fps);
+		settings.setValue(SCStrings::_CAMERA_FEED_SIZE_W, w);
+		settings.setValue(SCStrings::_CAMERA_FEED_SIZE_H, h);
+		settings.setValue(SCStrings::_CAMERA_CONNVALL, camId);
+		settings.setValue(SCStrings::_CAMERA_IS_COLOR, isColor);
+		settings.setValue(SCStrings::_ENA, isEna);
 		settings.endGroup();
 
 		return true;
@@ -242,13 +242,13 @@ Camera loadSettingsFromRegistry(QString grpName)
 
 	settings.beginGroup(grpName);
 
-	camera.setCameraTypeEnum(static_cast<CameraTypeEnum>(settings.value(_CAMERA_TYPE).toInt()));
-	camera.setCameraFeedSize(settings.value(_CAMERA_FEED_SIZE_W).toInt(), settings.value(_CAMERA_FEED_SIZE_H).toInt());
-	camera.setCameraFPS(settings.value(_CAMERA_FPS).toInt());
-	camera.setCameraName(settings.value(_CAMERA_NAME).toString());
-	camera.setCameraConnectionString(settings.value(_CAMERA_CONNVALL).toString());
-	camera.setIsColor(settings.value(_CAMERA_IS_COLOR).toBool());
-	camera.setIsEnabled(settings.value(_ENA).toBool());
+	camera.setCameraTypeEnum(static_cast<CameraTypeEnum>(settings.value(SCStrings::_CAMERA_TYPE).toInt()));
+	camera.setCameraFeedSize(settings.value(SCStrings::_CAMERA_FEED_SIZE_W).toInt(), settings.value(SCStrings::_CAMERA_FEED_SIZE_H).toInt());
+	camera.setCameraFPS(settings.value(SCStrings::_CAMERA_FPS).toInt());
+	camera.setCameraName(settings.value(SCStrings::_CAMERA_NAME).toString());
+	camera.setCameraConnectionString(settings.value(SCStrings::_CAMERA_CONNVALL).toString());
+	camera.setIsColor(settings.value(SCStrings::_CAMERA_IS_COLOR).toBool());
+	camera.setIsEnabled(settings.value(SCStrings::_ENA).toBool());
 
 	settings.endGroup();
 
@@ -257,10 +257,10 @@ Camera loadSettingsFromRegistry(QString grpName)
 
 void SettingsWindow::showOkDialog(QWidget* parent)
 {
-	QMessageBox::information(parent, _success, _settingsSavedSuccess, QMessageBox::Ok);
+	QMessageBox::information(parent, SCStrings::_success, SCStrings::_settingsSavedSuccess, QMessageBox::Ok);
 }
 
 void SettingsWindow::showFailedDialog(QWidget* parent)
 {
-	QMessageBox::critical(parent, _error, _settingsSavedFail, QMessageBox::Ok);
+	QMessageBox::critical(parent, SCStrings::_error, SCStrings::_settingsSavedFail, QMessageBox::Ok);
 }

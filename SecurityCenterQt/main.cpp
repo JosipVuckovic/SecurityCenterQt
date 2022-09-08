@@ -7,8 +7,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     
-    QCoreApplication::setOrganizationName(_myName);
-    QCoreApplication::setApplicationName(_nwp);
+    QCoreApplication::setOrganizationName(SCStrings::_myName);
+    QCoreApplication::setApplicationName(SCStrings::_nwp);
 
     MainWindow w;
     w.setWindowState(Qt::WindowMaximized);

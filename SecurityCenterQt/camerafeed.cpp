@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "camerafeed.h"
-#include "globalstrings.h"
 #include <opencv2/opencv.hpp>
+#include "globalstrings.h"
 
 //OpenCV related 
 //OpenCV uses BGR scalars, but we flip that on images with QT so watch out for that
@@ -44,8 +44,8 @@ void CameraFeed::run()
 	{
 		QTemporaryDir tempDir;
 		if (tempDir.isValid()) {
-			const QString tempFile = tempDir.path() + _slash + _haarFileName;
-			if (QFile::copy(_QtResurceHaar, tempFile)) //File will autoclean when exits the scope
+			const QString tempFile = tempDir.path() + SCStrings::_slash + SCStrings::_haarFileName;
+			if (QFile::copy(SCStrings::_QtResurceHaar, tempFile)) //File will autoclean when exits the scope
 			{
 				faceCascade.load(tempFile.toStdString()); 
 			}
@@ -63,7 +63,7 @@ void CameraFeed::run()
 			if (mRecording)
 			{	
 				cv::resize(mFrame, mResizedRecordingFrame, this->mCamera.getCameraFeedSize());
-				cv::putText(mFrame, _rec, _textOriginPoint, _fontFace, _fontScale, _redColor);
+				cv::putText(mFrame, SCStrings::_rec, _textOriginPoint, _fontFace, _fontScale, _redColor);
 				oVideoWriter.write(mResizedRecordingFrame);
 			}	
 			
@@ -89,7 +89,7 @@ void CameraFeed::run()
 	else
 	{
 		mIsRecieving = false;
-		mPixmap = QPixmap::fromImage(QImage(_QtResurceNoCam));
+		mPixmap = QPixmap::fromImage(QImage(SCStrings::_QtResurceNoCam));
 		emit newPixmapCaptured();
 	}
 }
@@ -98,7 +98,7 @@ void CameraFeed::initRecording(bool rec)
 {	
 	mRecording = rec;
 
-	std::string outputString = QDir::currentPath().toStdString() + _slash + this->mCamera.getCamerName().toStdString() + _underscore + QDateTime::currentDateTime().toString(_dateTimeFormat).toStdString() + _dotAvi;
+	std::string outputString = QDir::currentPath().toStdString() + SCStrings::_slash + this->mCamera.getCamerName().toStdString() + SCStrings::_underscore + QDateTime::currentDateTime().toString(SCStrings::_dateTimeFormat).toStdString() + SCStrings::_dotAvi;
 	int codec = cv::VideoWriter::fourcc(*_DIVIX[0], *_DIVIX[1], *_DIVIX[2], *_DIVIX[3]);
 	oVideoWriter = cv::VideoWriter(outputString, codec,this->mCamera.getCameraFPS(), this->mCamera.getCameraFeedSize(), this->mCamera.getIsColor());
 }
@@ -113,7 +113,7 @@ void CameraFeed::releaseRecording(bool rec)
 bool CameraFeed::saveCameraScreenshot()
 {	
 	QImage tmp = this->qImageFromOpenCVMat();
-	QString outputString = QDir::currentPath()+ _slash + this->mCamera.getCamerName()+ _underscore + QDateTime::currentDateTime().toString(_dateTimeFormat) + _dotJpg;
+	QString outputString = QDir::currentPath()+ SCStrings::_slash + this->mCamera.getCamerName()+ SCStrings::_underscore + QDateTime::currentDateTime().toString(SCStrings::_dateTimeFormat) + SCStrings::_dotJpg;
 	QImageWriter writer(outputString);
 	return writer.write(tmp);
 }
