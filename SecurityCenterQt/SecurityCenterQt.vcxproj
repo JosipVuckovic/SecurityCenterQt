@@ -99,7 +99,6 @@
     <QtRcc Include="mainwindow.qrc" />
     <QtUic Include="mainwindow.ui" />
     <QtMoc Include="mainwindow.h" />
-    <ClCompile Include="camera.cpp" />
     <ClCompile Include="camerafeed.cpp" />
     <ClCompile Include="clickablelabel.cpp" />
     <ClCompile Include="mainwindow.cpp" />
@@ -108,6 +107,7 @@
     <ClInclude Include="camera.h" />
     <QtMoc Include="settingswindow.h" />
     <QtMoc Include="clickablelabel.h" />
+    <ClInclude Include="globalstrings.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="settingswindow.cpp" />
     <ClCompile Include="stdafx.cpp">

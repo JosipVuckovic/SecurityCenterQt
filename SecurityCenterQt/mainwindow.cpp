@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "camerafeed.h"
 #include "settingswindow.h"
+#include "globalstrings.h"
 
 MainWindow::MainWindow(QWidget* parent)	: QMainWindow(parent)
 {
@@ -112,13 +113,13 @@ void MainWindow::on_cam1_record_button_clicked()
 	{
 		recordingCam1 = true;
 		VideoCapture_Cam1->initRecording(recordingCam1);
-		ui.cam1_record_button->setText("Stop recording");
+		ui.cam1_record_button->setText(_stopRecording);
 	}
 	else
 	{
 		recordingCam1 = false;		
 		VideoCapture_Cam1->releaseRecording(recordingCam1);
-		ui.cam1_record_button->setText("Start recording");
+		ui.cam1_record_button->setText(_startRecording);
 	}	
 }
 
@@ -128,13 +129,13 @@ void MainWindow::on_cam2_record_button_clicked()
 	{
 		recordingCam2 = true;
 		VideoCapture_Cam2->initRecording(recordingCam2);
-		ui.cam1_record_button->setText("Stop recording");
+		ui.cam1_record_button->setText(_stopRecording);
 	}
 	else
 	{
 		recordingCam2 = false;
 		VideoCapture_Cam2->releaseRecording(recordingCam2);
-		ui.cam2_record_button->setText("Start recording");
+		ui.cam2_record_button->setText(_startRecording);
 	}
 }
 
@@ -144,13 +145,13 @@ void MainWindow::on_cam3_record_button_clicked()
 	{
 		recordingCam3 = true;
 		VideoCapture_Cam3->initRecording(recordingCam3);
-		ui.cam3_record_button->setText("Stop recording");
+		ui.cam3_record_button->setText(_stopRecording);
 	}
 	else
 	{
 		recordingCam3 = false;
 		VideoCapture_Cam3->releaseRecording(recordingCam2);
-		ui.cam3_record_button->setText("Start recording");
+		ui.cam3_record_button->setText(_startRecording);
 	}
 }
 
@@ -160,13 +161,13 @@ void MainWindow::on_cam4_record_button_clicked()
 	{
 		recordingCam4 = true;
 		VideoCapture_Cam4->initRecording(recordingCam4);
-		ui.cam4_record_button->setText("Stop recording");
+		ui.cam4_record_button->setText(_stopRecording);
 	}
 	else
 	{
 		recordingCam4 = false;
 		VideoCapture_Cam4->releaseRecording(recordingCam4);
-		ui.cam4_record_button->setText("Start recording");
+		ui.cam4_record_button->setText(_startRecording);
 	}
 }
 
@@ -185,20 +186,20 @@ void MainWindow::on_settings_button_clicked()
 
 void MainWindow::successTakeShot()
 {
-	QMessageBox::information(this, "Info", "Image saved", QMessageBox::Ok);
+	QMessageBox::information(this, _info, _imageSaved, QMessageBox::Ok);
 }
 
 void MainWindow::failedTakeShot()
 {
-	QMessageBox::critical(this, "Error", "Failed to save image", QMessageBox::Ok);
+	QMessageBox::critical(this, _error, _imageFailedSave, QMessageBox::Ok);
 }
 
 void MainWindow::setupCameras()
 {
-	Camera Cam1 = loadSettingsFromRegistry(CAM1);
-	Camera Cam2 = loadSettingsFromRegistry(CAM2);
-	Camera Cam3 = loadSettingsFromRegistry(CAM3);
-	Camera Cam4 = loadSettingsFromRegistry(CAM4);
+	Camera Cam1 = loadSettingsFromRegistry(_CAM1);
+	Camera Cam2 = loadSettingsFromRegistry(_CAM2);
+	Camera Cam3 = loadSettingsFromRegistry(_CAM3);
+	Camera Cam4 = loadSettingsFromRegistry(_CAM4);
 
 	VideoCapture_Cam1 = new CameraFeed(Cam1, this);
 	VideoCapture_Cam2 = new CameraFeed(Cam2, this);
@@ -232,4 +233,3 @@ void MainWindow::setupCameras()
 		ui.cam4_take_shot_button->setEnabled(VideoCapture_Cam4->isIsRecieving());
 		});
 }
-

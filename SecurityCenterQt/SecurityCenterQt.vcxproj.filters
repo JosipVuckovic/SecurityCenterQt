@@ -49,9 +49,6 @@
     <ClCompile Include="camerafeed.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="settingswindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,6 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="globalstrings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "settingswindow.h"
 #include "camera.h"
+#include "globalstrings.h"
+
 
 SettingsWindow::SettingsWindow(QWidget* parent) : QDialog{ parent }
 {
@@ -8,7 +10,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QDialog{ parent }
 	fillDataForForm();
 }
 
-SettingsWindow::~SettingsWindow() 
+SettingsWindow::~SettingsWindow()
 {
 	delete intValResolution;
 	delete intValFPS;
@@ -18,20 +20,20 @@ SettingsWindow::~SettingsWindow()
 void SettingsWindow::fillDataForForm()
 {
 
-	 intValResolution = new QIntValidator(320, 1080, this);
-	 intValFPS = new QIntValidator(1, 60, this);
-	 intIndex = new QIntValidator(0, 100, this);
-	
+	intValResolution = new QIntValidator(320, 1080, this);
+	intValFPS = new QIntValidator(1, 60, this);
+	intIndex = new QIntValidator(0, 100, this);
+
 
 	ui.cam1_lineEdit_FPS->setValidator(intValFPS);
 	ui.cam1_lineEdit_Height->setValidator(intValResolution);
 	ui.cam1_lineEdit_Width->setValidator(intValResolution);
 
-	ui.cam1_Type_comboBox->addItem("Direct/USB", CameraTypeEnum::DIRECT_CONNECT);
-	ui.cam1_Type_comboBox->addItem("IP Camera", CameraTypeEnum::IP_CAMERA);
+	ui.cam1_Type_comboBox->addItem(_directCam, CameraTypeEnum::DIRECT_CONNECT);
+	ui.cam1_Type_comboBox->addItem(_IPcam, CameraTypeEnum::IP_CAMERA);
 
 
-	Camera loadedSettings = loadSettingsFromRegistry(CAM1);
+	Camera loadedSettings = loadSettingsFromRegistry(_CAM1);
 
 	ui.cam1_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(loadedSettings.getCameraEnumType()));
 	ui.cam1_lineEdit_Name->setText(loadedSettings.getCamerName());
@@ -48,10 +50,10 @@ void SettingsWindow::fillDataForForm()
 	ui.cam2_lineEdit_Height->setValidator(intValResolution);
 	ui.cam2_lineEdit_Width->setValidator(intValResolution);
 
-	ui.cam2_Type_comboBox->addItem("Direct/USB", CameraTypeEnum::DIRECT_CONNECT);
-	ui.cam2_Type_comboBox->addItem("IP Camera", CameraTypeEnum::IP_CAMERA);
+	ui.cam2_Type_comboBox->addItem(_directCam, CameraTypeEnum::DIRECT_CONNECT);
+	ui.cam2_Type_comboBox->addItem(_IPcam, CameraTypeEnum::IP_CAMERA);
 
-	loadedSettings = loadSettingsFromRegistry(CAM2);
+	loadedSettings = loadSettingsFromRegistry(_CAM2);
 
 	ui.cam2_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(loadedSettings.getCameraEnumType()));
 	ui.cam2_lineEdit_Name->setText(loadedSettings.getCamerName());
@@ -68,10 +70,10 @@ void SettingsWindow::fillDataForForm()
 	ui.cam3_lineEdit_Height->setValidator(intValResolution);
 	ui.cam3_lineEdit_Width->setValidator(intValResolution);
 
-	ui.cam3_Type_comboBox->addItem("Direct/USB", CameraTypeEnum::DIRECT_CONNECT);
-	ui.cam3_Type_comboBox->addItem("IP Camera", CameraTypeEnum::IP_CAMERA);
+	ui.cam3_Type_comboBox->addItem(_directCam, CameraTypeEnum::DIRECT_CONNECT);
+	ui.cam3_Type_comboBox->addItem(_IPcam, CameraTypeEnum::IP_CAMERA);
 
-	loadedSettings = loadSettingsFromRegistry(CAM3);
+	loadedSettings = loadSettingsFromRegistry(_CAM3);
 
 	ui.cam3_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(loadedSettings.getCameraEnumType()));
 	ui.cam3_lineEdit_Name->setText(loadedSettings.getCamerName());
@@ -87,10 +89,10 @@ void SettingsWindow::fillDataForForm()
 	ui.cam4_lineEdit_Height->setValidator(intValResolution);
 	ui.cam4_lineEdit_Width->setValidator(intValResolution);
 
-	ui.cam4_Type_comboBox->addItem("Direct/USB", CameraTypeEnum::DIRECT_CONNECT);
-	ui.cam4_Type_comboBox->addItem("IP Camera", CameraTypeEnum::IP_CAMERA);
+	ui.cam4_Type_comboBox->addItem(_directCam, CameraTypeEnum::DIRECT_CONNECT);
+	ui.cam4_Type_comboBox->addItem(_IPcam, CameraTypeEnum::IP_CAMERA);
 
-	loadedSettings = loadSettingsFromRegistry(CAM3);
+	loadedSettings = loadSettingsFromRegistry(_CAM4);
 
 	ui.cam4_Type_comboBox->setCurrentIndex(ui.cam1_Type_comboBox->findData(loadedSettings.getCameraEnumType()));
 	ui.cam4_lineEdit_Name->setText(loadedSettings.getCamerName());
@@ -105,7 +107,7 @@ void SettingsWindow::fillDataForForm()
 void SettingsWindow::on_cam1_saveChanges_button_clicked()
 {
 	if (saveSettingsToRegistry(
-		CAM1,
+		_CAM1,
 		ui.cam1_Type_comboBox->currentData(),
 		ui.cam1_lineEdit_Name->text(),
 		ui.cam1_lineEdit_FPS->text().toInt(),
@@ -127,7 +129,7 @@ void SettingsWindow::on_cam1_saveChanges_button_clicked()
 void SettingsWindow::on_cam2_saveChanges_button_clicked()
 {
 	if (saveSettingsToRegistry(
-		CAM2,
+		_CAM2,
 		ui.cam2_Type_comboBox->currentData(),
 		ui.cam2_lineEdit_Name->text(),
 		ui.cam2_lineEdit_FPS->text().toInt(),
@@ -135,7 +137,7 @@ void SettingsWindow::on_cam2_saveChanges_button_clicked()
 		ui.cam2_lineEdit_Height->text().toInt(),
 		ui.cam2_lineEdit_Connection->text(),
 		ui.cam2_checkBox_Color->isChecked(),
-		ui.cam1_Anon->isChecked()))
+		ui.cam2_Anon->isChecked()))
 	{
 		emit settingSaved();
 		showOkDialog(this);
@@ -149,7 +151,7 @@ void SettingsWindow::on_cam2_saveChanges_button_clicked()
 void SettingsWindow::on_cam3_saveChanges_button_clicked()
 {
 	if (saveSettingsToRegistry(
-		CAM3,
+		_CAM3,
 		ui.cam3_Type_comboBox->currentData(),
 		ui.cam3_lineEdit_Name->text(),
 		ui.cam3_lineEdit_FPS->text().toInt(),
@@ -171,7 +173,7 @@ void SettingsWindow::on_cam3_saveChanges_button_clicked()
 void SettingsWindow::on_cam4_saveChanges_button_clicked()
 {
 	if (saveSettingsToRegistry(
-		CAM4,
+		_CAM4,
 		ui.cam4_Type_comboBox->currentData(),
 		ui.cam4_lineEdit_Name->text(),
 		ui.cam4_lineEdit_FPS->text().toInt(),
@@ -192,19 +194,19 @@ void SettingsWindow::on_cam4_saveChanges_button_clicked()
 
 void SettingsWindow::on_cam1_Type_comboBox_currentIndexChanged(int index)
 {
-	index == 0 ? ui.cam1_lineEdit_Connection->setValidator(intIndex) : ui.cam1_lineEdit_Connection->setValidator(nullptr);
+	ui.cam1_lineEdit_Connection->setValidator(index == 0 ? intIndex : nullptr);
 }
 void SettingsWindow::on_cam2_Type_comboBox_currentIndexChanged(int index)
 {
-	index == 0 ? ui.cam1_lineEdit_Connection->setValidator(intIndex) : ui.cam1_lineEdit_Connection->setValidator(nullptr);
+	ui.cam2_lineEdit_Connection->setValidator(index == 0 ? intIndex : nullptr);
 }
 void SettingsWindow::on_cam3_Type_comboBox_currentIndexChanged(int index)
 {
-	index == 0 ? ui.cam1_lineEdit_Connection->setValidator(intIndex) : ui.cam1_lineEdit_Connection->setValidator(nullptr);
+	ui.cam3_lineEdit_Connection->setValidator(index == 0 ? intIndex : nullptr);
 }
 void SettingsWindow::on_cam4_Type_comboBox_currentIndexChanged(int index)
 {
-	index == 0 ? ui.cam1_lineEdit_Connection->setValidator(intIndex) : ui.cam1_lineEdit_Connection->setValidator(nullptr);
+	ui.cam4_lineEdit_Connection->setValidator(index == 0 ? intIndex : nullptr);
 }
 
 bool SettingsWindow::saveSettingsToRegistry(QString grpName, QVariant camType, QString name, int fps, int w, int h, QVariant camId, bool isColor, bool isEna)
@@ -213,14 +215,14 @@ bool SettingsWindow::saveSettingsToRegistry(QString grpName, QVariant camType, Q
 	{
 		QSettings settings;
 		settings.beginGroup(grpName);
-		settings.setValue(CAMERA_TYPE, camType);
-		settings.setValue(CAMERA_NAME, name);
-		settings.setValue(CAMERA_FPS, fps);
-		settings.setValue(CAMERA_FEED_SIZE_W, w);
-		settings.setValue(CAMERA_FEED_SIZE_H, h);
-		settings.setValue(CAMERA_CONNVALL, camId);
-		settings.setValue(CAMERA_IS_COLOR, isColor);
-		settings.setValue("ENA", isEna);
+		settings.setValue(_CAMERA_TYPE, camType);
+		settings.setValue(_CAMERA_NAME, name);
+		settings.setValue(_CAMERA_FPS, fps);
+		settings.setValue(_CAMERA_FEED_SIZE_W, w);
+		settings.setValue(_CAMERA_FEED_SIZE_H, h);
+		settings.setValue(_CAMERA_CONNVALL, camId);
+		settings.setValue(_CAMERA_IS_COLOR, isColor);
+		settings.setValue(_ENA, isEna);
 		settings.endGroup();
 
 		return true;
@@ -240,13 +242,13 @@ Camera loadSettingsFromRegistry(QString grpName)
 
 	settings.beginGroup(grpName);
 
-	camera.setCameraTypeEnum(static_cast<CameraTypeEnum>(settings.value(CAMERA_TYPE).toInt()));
-	camera.setCameraFeedSize(settings.value(CAMERA_FEED_SIZE_W).toInt(), settings.value(CAMERA_FEED_SIZE_H).toInt());
-	camera.setCameraFPS(settings.value(CAMERA_FPS).toInt());
-	camera.setCameraName(settings.value(CAMERA_NAME).toString());
-	camera.setCameraConnectionString(settings.value(CAMERA_CONNVALL).toString());
-	camera.setIsColor(settings.value(CAMERA_IS_COLOR).toBool());
-	camera.setIsEnabled(settings.value("ENA").toBool());
+	camera.setCameraTypeEnum(static_cast<CameraTypeEnum>(settings.value(_CAMERA_TYPE).toInt()));
+	camera.setCameraFeedSize(settings.value(_CAMERA_FEED_SIZE_W).toInt(), settings.value(_CAMERA_FEED_SIZE_H).toInt());
+	camera.setCameraFPS(settings.value(_CAMERA_FPS).toInt());
+	camera.setCameraName(settings.value(_CAMERA_NAME).toString());
+	camera.setCameraConnectionString(settings.value(_CAMERA_CONNVALL).toString());
+	camera.setIsColor(settings.value(_CAMERA_IS_COLOR).toBool());
+	camera.setIsEnabled(settings.value(_ENA).toBool());
 
 	settings.endGroup();
 
@@ -255,10 +257,10 @@ Camera loadSettingsFromRegistry(QString grpName)
 
 void SettingsWindow::showOkDialog(QWidget* parent)
 {
-	QMessageBox::information(parent, "Success", "Camera settings saved successfully", "OK");
+	QMessageBox::information(parent, _success, _settingsSavedSuccess, QMessageBox::Ok);
 }
 
 void SettingsWindow::showFailedDialog(QWidget* parent)
 {
-	QMessageBox::critical(parent, "ERROR", "Failed to save camera settings \n\r Contact your support! ", "OK");
+	QMessageBox::critical(parent, _error, _settingsSavedFail, QMessageBox::Ok);
 }
