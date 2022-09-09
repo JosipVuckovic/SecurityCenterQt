@@ -112,13 +112,13 @@ void MainWindow::on_cam1_record_button_clicked()
 	if (!recordingCam1)
 	{
 		recordingCam1 = true;
-		VideoCapture_Cam1->initRecording(recordingCam1);
+		VideoCapture_Cam1->initRecording();
 		ui.cam1_record_button->setText(SCStrings::_stopRecording);
 	}
 	else
 	{
 		recordingCam1 = false;		
-		VideoCapture_Cam1->releaseRecording(recordingCam1);
+		VideoCapture_Cam1->releaseRecording();
 		ui.cam1_record_button->setText(SCStrings::_startRecording);
 	}	
 }
@@ -128,13 +128,13 @@ void MainWindow::on_cam2_record_button_clicked()
 	if (!recordingCam2)
 	{
 		recordingCam2 = true;
-		VideoCapture_Cam2->initRecording(recordingCam2);
+		VideoCapture_Cam2->initRecording();
 		ui.cam1_record_button->setText(SCStrings::_stopRecording);
 	}
 	else
 	{
 		recordingCam2 = false;
-		VideoCapture_Cam2->releaseRecording(recordingCam2);
+		VideoCapture_Cam2->releaseRecording();
 		ui.cam2_record_button->setText(SCStrings::_startRecording);
 	}
 }
@@ -144,13 +144,13 @@ void MainWindow::on_cam3_record_button_clicked()
 	if (!recordingCam3)
 	{
 		recordingCam3 = true;
-		VideoCapture_Cam3->initRecording(recordingCam3);
+		VideoCapture_Cam3->initRecording();
 		ui.cam3_record_button->setText(SCStrings::_stopRecording);
 	}
 	else
 	{
 		recordingCam3 = false;
-		VideoCapture_Cam3->releaseRecording(recordingCam2);
+		VideoCapture_Cam3->releaseRecording();
 		ui.cam3_record_button->setText(SCStrings::_startRecording);
 	}
 }
@@ -160,13 +160,13 @@ void MainWindow::on_cam4_record_button_clicked()
 	if (!recordingCam4)
 	{
 		recordingCam4 = true;
-		VideoCapture_Cam4->initRecording(recordingCam4);
+		VideoCapture_Cam4->initRecording();
 		ui.cam4_record_button->setText(SCStrings::_stopRecording);
 	}
 	else
 	{
 		recordingCam4 = false;
-		VideoCapture_Cam4->releaseRecording(recordingCam4);
+		VideoCapture_Cam4->releaseRecording();
 		ui.cam4_record_button->setText(SCStrings::_startRecording);
 	}
 }

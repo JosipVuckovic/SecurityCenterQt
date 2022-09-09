@@ -5,7 +5,6 @@
 
 //OpenCV related 
 //OpenCV uses BGR scalars, but we flip that on images with QT so watch out for that
-//use G when you want B and B when you want G
 const static int& _fontFace = 5;
 const static int& _fontScale = 1;
 const static cv::Point& _textOriginPoint = cv::Point(0, 30);
@@ -94,18 +93,18 @@ void CameraFeed::run()
 	}
 }
 
-void CameraFeed::initRecording(bool rec)
+void CameraFeed::initRecording()
 {	
-	mRecording = rec;
+	mRecording = true;
 
 	std::string outputString = QDir::currentPath().toStdString() + SCStrings::_slash + this->mCamera.getCamerName().toStdString() + SCStrings::_underscore + QDateTime::currentDateTime().toString(SCStrings::_dateTimeFormat).toStdString() + SCStrings::_dotAvi;
 	int codec = cv::VideoWriter::fourcc(*_DIVIX[0], *_DIVIX[1], *_DIVIX[2], *_DIVIX[3]);
 	oVideoWriter = cv::VideoWriter(outputString, codec,this->mCamera.getCameraFPS(), this->mCamera.getCameraFeedSize(), this->mCamera.getIsColor());
 }
 
-void CameraFeed::releaseRecording(bool rec)
+void CameraFeed::releaseRecording()
 {	
-	mRecording = rec;
+	mRecording = false;
 
 	oVideoWriter.release();
 }

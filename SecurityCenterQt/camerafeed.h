@@ -50,8 +50,8 @@ public:
 		mVideoCapture = cv::VideoCapture(conVar);
 	}
 
-	void releaseRecording(bool rec);
-	void initRecording(bool rec);
+	void releaseRecording();
+	void initRecording();
 
 	bool saveCameraScreenshot();	
 

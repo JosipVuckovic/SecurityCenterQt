@@ -3,35 +3,36 @@
 #include "camera.h"
 #include "globalstrings.h"
 
+const int& _minimumIndex = 0;
+const int& _maximumIndex = 100;
+const int& _minimumFPS = 1;
+const int& _maximumFPS = 60;
+const int& _minimumResolution = 320;
+const int& _maximumResolution = 1080;
+
 
 SettingsWindow::SettingsWindow(QWidget* parent) : QDialog{ parent }
 {
-	ui.setupUi(this);
+	ui.setupUi(this);	
+	intValResolution.setRange(_minimumResolution, _maximumResolution);
+	intValFPS.setRange(_minimumFPS, _maximumFPS);
+	intIndex.setRange(_minimumIndex, _maximumIndex);
 	fillDataForForm();
 }
 
 SettingsWindow::~SettingsWindow()
 {
-	delete intValResolution;
-	delete intValFPS;
-	delete intIndex;
+	
 }
 
 void SettingsWindow::fillDataForForm()
 {
-
-	intValResolution = new QIntValidator(320, 1080, this);
-	intValFPS = new QIntValidator(1, 60, this);
-	intIndex = new QIntValidator(0, 100, this);
-
-
-	ui.cam1_lineEdit_FPS->setValidator(intValFPS);
-	ui.cam1_lineEdit_Height->setValidator(intValResolution);
-	ui.cam1_lineEdit_Width->setValidator(intValResolution);
+	ui.cam1_lineEdit_FPS->setValidator(&intValFPS);
+	ui.cam1_lineEdit_Height->setValidator(&intValResolution);
+	ui.cam1_lineEdit_Width->setValidator(&intValResolution);
 
 	ui.cam1_Type_comboBox->addItem(SCStrings::_directCam, CameraTypeEnum::DIRECT_CONNECT);
 	ui.cam1_Type_comboBox->addItem(SCStrings::_IPcam, CameraTypeEnum::IP_CAMERA);
-
 
 	Camera loadedSettings = loadSettingsFromRegistry(SCStrings::_CAM1);
 
@@ -46,9 +47,9 @@ void SettingsWindow::fillDataForForm()
 	ui.cam1_Anon->setChecked(loadedSettings.getIsEnabled());
 
 
-	ui.cam2_lineEdit_FPS->setValidator(intValFPS);
-	ui.cam2_lineEdit_Height->setValidator(intValResolution);
-	ui.cam2_lineEdit_Width->setValidator(intValResolution);
+	ui.cam2_lineEdit_FPS->setValidator(&intValFPS);
+	ui.cam2_lineEdit_Height->setValidator(&intValResolution);
+	ui.cam2_lineEdit_Width->setValidator(&intValResolution);
 
 	ui.cam2_Type_comboBox->addItem(SCStrings::_directCam, CameraTypeEnum::DIRECT_CONNECT);
 	ui.cam2_Type_comboBox->addItem(SCStrings::_IPcam, CameraTypeEnum::IP_CAMERA);
@@ -66,9 +67,9 @@ void SettingsWindow::fillDataForForm()
 	ui.cam2_Anon->setChecked(loadedSettings.getIsEnabled());
 
 
-	ui.cam3_lineEdit_FPS->setValidator(intValFPS);
-	ui.cam3_lineEdit_Height->setValidator(intValResolution);
-	ui.cam3_lineEdit_Width->setValidator(intValResolution);
+	ui.cam3_lineEdit_FPS->setValidator(&intValFPS);
+	ui.cam3_lineEdit_Height->setValidator(&intValResolution);
+	ui.cam3_lineEdit_Width->setValidator(&intValResolution);
 
 	ui.cam3_Type_comboBox->addItem(SCStrings::_directCam, CameraTypeEnum::DIRECT_CONNECT);
 	ui.cam3_Type_comboBox->addItem(SCStrings::_IPcam, CameraTypeEnum::IP_CAMERA);
@@ -85,9 +86,9 @@ void SettingsWindow::fillDataForForm()
 	ui.cam3_checkBox_Color->setChecked(loadedSettings.getIsColor());
 
 
-	ui.cam4_lineEdit_FPS->setValidator(intValFPS);
-	ui.cam4_lineEdit_Height->setValidator(intValResolution);
-	ui.cam4_lineEdit_Width->setValidator(intValResolution);
+	ui.cam4_lineEdit_FPS->setValidator(&intValFPS);
+	ui.cam4_lineEdit_Height->setValidator(&intValResolution);
+	ui.cam4_lineEdit_Width->setValidator(&intValResolution);
 
 	ui.cam4_Type_comboBox->addItem(SCStrings::_directCam, CameraTypeEnum::DIRECT_CONNECT);
 	ui.cam4_Type_comboBox->addItem(SCStrings::_IPcam, CameraTypeEnum::IP_CAMERA);
@@ -193,20 +194,20 @@ void SettingsWindow::on_cam4_saveChanges_button_clicked()
 }
 
 void SettingsWindow::on_cam1_Type_comboBox_currentIndexChanged(int index)
-{
-	ui.cam1_lineEdit_Connection->setValidator(index == 0 ? intIndex : nullptr);
+{	
+	ui.cam1_lineEdit_Connection->setValidator(index == 0 ? &intIndex : nullptr);
 }
 void SettingsWindow::on_cam2_Type_comboBox_currentIndexChanged(int index)
 {
-	ui.cam2_lineEdit_Connection->setValidator(index == 0 ? intIndex : nullptr);
+	ui.cam2_lineEdit_Connection->setValidator(index == 0 ? &intIndex : nullptr);
 }
 void SettingsWindow::on_cam3_Type_comboBox_currentIndexChanged(int index)
 {
-	ui.cam3_lineEdit_Connection->setValidator(index == 0 ? intIndex : nullptr);
+	ui.cam3_lineEdit_Connection->setValidator(index == 0 ? &intIndex : nullptr);
 }
 void SettingsWindow::on_cam4_Type_comboBox_currentIndexChanged(int index)
 {
-	ui.cam4_lineEdit_Connection->setValidator(index == 0 ? intIndex : nullptr);
+	ui.cam4_lineEdit_Connection->setValidator(index == 0 ? &intIndex : nullptr);
 }
 
 bool SettingsWindow::saveSettingsToRegistry(QString grpName, QVariant camType, QString name, int fps, int w, int h, QVariant camId, bool isColor, bool isEna)

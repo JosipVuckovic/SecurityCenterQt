@@ -12,12 +12,12 @@ public:
 	MainWindow(QWidget* parent = nullptr);
 	~MainWindow();
 
-	void inline disableAllButtons();
-	void inline successTakeShot();
-	void inline failedTakeShot();
-	void inline setupCameras();
-	void inline terminateAllCameras();
-	void inline startAllCameras();
+	void disableAllButtons();
+	void successTakeShot();
+	void failedTakeShot();
+	void setupCameras();
+	void terminateAllCameras();
+	void startAllCameras();
 
 private slots:
 	//void on_<object - name>_<signal - name>(<signal - parameters>); how it needs to look like, can't be generated in designer unlike qt creator

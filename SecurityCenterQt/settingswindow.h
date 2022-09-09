@@ -13,8 +13,7 @@ class SettingsWindow : public QDialog, public Ui::SettingsWindowClass
 public:
 	SettingsWindow(QWidget* parent = nullptr);
 	~SettingsWindow();
-
-	void setDialogValidators();
+		
 	bool saveSettingsToRegistry(QString grpName, QVariant camType, QString name, int fps, int w, int h, QVariant camId, bool isColor, bool isEnabled = false);
 	//bool saveSettingsToRegistry(QString grpName, QVariant camType, QString name, int fps, int w, int h, QVariant camId, bool isColor, bool isEnabled);
 	void  showOkDialog(QWidget* parent);
@@ -35,7 +34,7 @@ private slots:
 
 private:
 	Ui::SettingsWindowClass ui;
-	QIntValidator* intValResolution;
-	QIntValidator* intValFPS;
-	QIntValidator* intIndex;
+	QIntValidator intValResolution;
+	QIntValidator intValFPS;
+	QIntValidator intIndex;
 };
