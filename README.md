@@ -17,7 +17,7 @@ Anonymization - When anonymization is turned on, the program will blur rectangle
 
 ### Recording
 The program will record video and take pictures to the root program folder. <br/>
-Anonymization will not be applied to the recorded video. Recording video will be pure stream from the camera
+Anonymization will not be applied to the recorded video or screenshot. Recording video will be pure stream from the camera
 
 ## Requirements
 ### To develop
